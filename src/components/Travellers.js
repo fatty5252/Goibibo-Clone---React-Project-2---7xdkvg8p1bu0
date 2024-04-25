@@ -44,7 +44,7 @@ export default function Travellers({open, setOpen}) {
             <Typography id="transition-modal-title" variant="h6" component="h2">
               Text in a modal
             </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            <Typography id="transition-modal-description" sx={{ mt: 2, width:"50%", height:"50%" }}>
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
             </Typography>
           </Box>
