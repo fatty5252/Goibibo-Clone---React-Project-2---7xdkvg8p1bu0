@@ -35,8 +35,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const { source, setSource, destination, setdestination, sourcedata, setsourceData,
-    destdata, setdestData, opensource, setopensource, opendest, setopendest, openSrc, opendesn} = useUser();
-
+    destdata, setdestData, opensource, setopensource, opendest, setopendest, openSrc, opendesn, FlightSearch} = useUser();
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -59,43 +58,43 @@ export default function Home() {
   }
 
 // ============function for flight search ======================================================== 
-  const FlightSearch = async () => {
-    try {
-      let url;
-      if (opensource) {
-        // If opensource is true, fetch the source airport
-        url = `https://academics.newtonschool.co/api/v1/bookingportals/airport?search={"city":"${source}"}`;
-      } else if (opendest) {
-        // If opendest is true, fetch the destination airport
-        url = `https://academics.newtonschool.co/api/v1/bookingportals/airport?search={"city":"${destination}"}`;
-      } else {
-        // If neither is true, return early or handle appropriately
-        console.log("Please specify either source or destination");
-        return;
-      }
+  // const FlightSearch = async () => {
+  //   try {
+  //     let url;
+  //     if (opensource) {
+  //       // If opensource is true, fetch the source airport
+  //       url = `https://academics.newtonschool.co/api/v1/bookingportals/airport?search={"city":"${source}"}`;
+  //     } else if (opendest) {
+  //       // If opendest is true, fetch the destination airport
+  //       url = `https://academics.newtonschool.co/api/v1/bookingportals/airport?search={"city":"${destination}"}`;
+  //     } else {
+  //       // If neither is true, return early or handle appropriately
+  //       console.log("Please specify either source or destination");
+  //       return;
+  //     }
 
-      const response = await axios.get(url, {
-        headers: {
-          projectId: projectID,
-        },
-      });
+  //     const response = await axios.get(url, {
+  //       headers: {
+  //         projectId: projectID,
+  //       },
+  //     });
 
-      if (opensource) {
-        setsourceData(response.data.data.airports);
-      } else if (opendest) {
-        console.log(response)
-        setdestData(response.data.data.airports);
-      }
+  //     if (opensource) {
+  //       setsourceData(response.data.data.airports);
+  //     } else if (opendest) {
+  //       console.log(response)
+  //       setdestData(response.data.data.airports);
+  //     }
 
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     console.log(response);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  useEffect(()=>{
-    FlightSearch();
-  },[source, destination, opensource, opendest])
+  // useEffect(()=>{
+  //   FlightSearch();
+  // },[source, destination, opensource, opendest])
 
 
 
@@ -132,9 +131,9 @@ export default function Home() {
                   onChange={(e) => setSource(e.target.value)}
                 />
                 {opensource &&
-                  <Box sx={{ width: "300px", height: "300px", backgroundColor: "red", position: 'absolute', top: '50px', left: '0px' }}>
+                  <Box sx={{ width: "300px", height: "300px", backgroundColor: "red", position: 'absolute', top: '58px', left: '0px' }}>
                     {sourcedata && sourcedata.map((item, index) => (
-                      <div key={index} onClick={() => setSource(item.iata_code)}>
+                      <div key={index} onClick={() => {setSource(item.iata_code), setopensource(false)}}>
                         <div>
                           <img src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
                           <p>{item.city}</p>
@@ -160,9 +159,9 @@ export default function Home() {
                 // defaultValue="Enter city airport"
                 />
                 {opendest &&
-                  <Box sx={{ width: "300px", height: "300px", backgroundColor: "red", position: "absolute", top: "50px", left: "0px" }}>
+                  <Box sx={{ width: "300px", height: "300px", backgroundColor: "red", position: "absolute", top: "58px", left: "0px" }}>
                     {destdata && destdata.map((item, index) => (
-                      <div key={index} onClick={() => setdestination(item.iata_code)}>
+                      <div key={index} onClick={() => {setdestination(item.iata_code), setopendest(false)}}>
                         <div>
                           <img src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
                           <p>{item.city}</p>
