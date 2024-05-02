@@ -1,24 +1,8 @@
-
-import { Carousel } from '@material-tailwind/react'
-import { Typography } from '@mui/material'
-import React from 'react'
-
-export default function Train() {
+import { Carousel } from "@material-tailwind/react";
+ 
+export function CarouselDefault() {
   return (
-    <div className="Train-main">
-            <div className="train">
-              <div className='relative top-10 border-spacing-5'>
-                <Typography style={{color:"black"}}> 
-                  Train Ticket Booking
-                </Typography>
-                <Typography>
-                <img alt="Irctc text logo" src="https://gos3.ibcdn.com/irctcWithTxt-1668596751.svg" width="45" height="45"/>
-                  IRCTC Authorized Partner
-                </Typography>
-                </div>
-            </div>
-
-            <Carousel className="rounded-xl w-30 h-30">
+    <Carousel className="rounded-xl">
       <img
         src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
         alt="image 1"
@@ -35,9 +19,5 @@ export default function Train() {
         className="h-full w-full object-cover"
       />
     </Carousel>
-        
-        </div>
-  )
+  );
 }
-
-
