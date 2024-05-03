@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import axios from 'axios';
-import { projectID } from "../components/Constrains";
+import { projectID, serachHOtelURL } from "../components/Constrains";
 
 const UserContext = createContext();
 
@@ -73,6 +73,38 @@ export const UserProvider = ({ children }) => {
     setopendest(!opendest)
   }
 
+  // Hotel Search
+
+  const [hotelserach, sethotelsearch] = useState()
+  const [hotelResults, sethotelResults] = useState()
+
+  const [hotelData, sethotelData] = useState([])
+
+
+  const HotelSearch = useMemo(async () => {
+    try {
+      const response = await axios.get(hotelserach ? `${serachHOtelURL}?search={"location":"${hotelserach}"}` : `${serachHOtelURL}`, {
+        headers: {
+          projectId: projectID,
+        },
+      });
+
+      if(hotelserach){
+        sethotelData(response.data.data.hotels);
+      }else{
+        sethotelResults(response)
+      }
+
+      // console.log(response.data.data.hotels);
+    } catch (err) {
+      console.log(err);
+    }
+  },[hotelserach])
+
+  useEffect(()=>{
+    HotelSearch;
+  },[])
+
     //get flight image and name
 
    const getAirlineInfo = (flightIDs) => {
@@ -94,7 +126,7 @@ export const UserProvider = ({ children }) => {
     const object = {
         getToken,getName, onTokenHandler, onNameHandler, loginpop, setLoginpop, source, setSource,destination, setdestination,sourcedata, setsourceData,
         destdata, setdestData, opensource, setopensource,opendest, setopendest,  openSrc, opendesn,FlightSearch,
-        getAirlineInfo
+        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelResults
     }
     return (<div>
         <UserContext.Provider value={object}>

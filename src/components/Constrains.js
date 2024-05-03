@@ -4,7 +4,7 @@ export const logInURL = "https://academics.newtonschool.co/api/v1/bookingportals
 export const singUpURL = "https://academics.newtonschool.co/api/v1/bookingportals/signup";
 export const searchFLightURL = "https://academics.newtonschool.co/api/v1/bookingportals/flight?search=";
 export const searchAirporttURL = "https://academics.newtonschool.co/api/v1/bookingportals/airport?search=";
-export const serachHOtelURL = "https://academics.newtonschool.co/api/v1/bookingportals/hotel?search=";
+export const serachHOtelURL = "https://academics.newtonschool.co/api/v1/bookingportals/hotel";
 export const gettingLocationURL = "https://academics.newtonschool.co/api/v1/bookingportals/city";
 export const trainSearchURL = "https://academics.newtonschool.co/api/v1/bookingportals/train?search=";
 export const searchBusURL = "https://academics.newtonschool.co/api/v1/bookingportals/bus?search=";

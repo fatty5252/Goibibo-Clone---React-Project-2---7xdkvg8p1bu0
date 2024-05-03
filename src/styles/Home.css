@@ -18,6 +18,17 @@
     background: url(https://gos3.ibcdn.com/trains-bg-home-1698304355.png) 0 100% no-repeat;
     height: 500px;
     background-size: cover;
+    z-index: 1;
+}
+
+.bg-front{
+    display: flex;
+    justify-content: space-between;
+    z-index: 20;
+    margin-top: 150px;
+    border: 1px solid red;
+    width: 100%;
+    height: 100px;
 }
 /* .bus-bg{
     width: 52rem;
@@ -30,3 +41,28 @@
     z-index: 2;
     border-radius: 50%;
 } */
+
+.hotel-bg{
+    width: 70vw;
+    height: 65rem;
+    background-image: linear-gradient(97.59deg, rgb(255, 109, 56) 0%, rgb(219, 122, 33) 100.53%);
+    border-radius: 50%;
+    position: absolute;
+    top: -45rem;
+    left: -43rem;
+    -webkit-transform: translate(50%);
+    transform: translate(50%);
+}
+
+.hotel-bg-front{
+   display: flex;
+    z-index: 20;
+    margin-top: 150px;
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 100px;
+    position: relative;
+    top: 35rem;
+    left: 20rem;
+    
+}
