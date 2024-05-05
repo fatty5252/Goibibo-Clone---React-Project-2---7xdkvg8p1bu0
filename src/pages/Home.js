@@ -9,7 +9,7 @@ import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button'
 import Travellers from '../components/Travellers'
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -35,7 +35,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const { source, setSource, destination, setdestination, sourcedata, setsourceData,
-    destdata, setdestData, opensource, setopensource, opendest, setopendest, openSrc, opendesn, FlightSearch} = useUser();
+    destdata, setdestData, opensource, setopensource, opendest, setopendest, openSrc, opendesn, FlightSearch } = useUser();
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -47,55 +47,16 @@ export default function Home() {
   const dateObj = new Date(day);
   const options = { weekday: 'short' }; // Options to display short weekday
   const dayOfWeek = dateObj.toLocaleDateString('en-GB', options); // Using 'en-GB' locale for the day of the week
-  console.log(dayOfWeek); // Output: "Sun"
+  console.log(dayOfWeek)
+
 
   // const [flightFrom, setflightfrom] = useState('')
 
-  
+
 
   const navigatetoflightresults = () => {
     navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
   }
-
-// ============function for flight search ======================================================== 
-  // const FlightSearch = async () => {
-  //   try {
-  //     let url;
-  //     if (opensource) {
-  //       // If opensource is true, fetch the source airport
-  //       url = `https://academics.newtonschool.co/api/v1/bookingportals/airport?search={"city":"${source}"}`;
-  //     } else if (opendest) {
-  //       // If opendest is true, fetch the destination airport
-  //       url = `https://academics.newtonschool.co/api/v1/bookingportals/airport?search={"city":"${destination}"}`;
-  //     } else {
-  //       // If neither is true, return early or handle appropriately
-  //       console.log("Please specify either source or destination");
-  //       return;
-  //     }
-
-  //     const response = await axios.get(url, {
-  //       headers: {
-  //         projectId: projectID,
-  //       },
-  //     });
-
-  //     if (opensource) {
-  //       setsourceData(response.data.data.airports);
-  //     } else if (opendest) {
-  //       console.log(response)
-  //       setdestData(response.data.data.airports);
-  //     }
-
-  //     console.log(response);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(()=>{
-  //   FlightSearch();
-  // },[source, destination, opensource, opendest])
-
 
 
   return (
@@ -104,7 +65,7 @@ export default function Home() {
         <Typography variant='h5' sx={{ textAlign: "center", p: "12px", color: "white", fontWeight: '700' }}>Domestic and International Flights</Typography>
         <div className='home-main-section'>
           <Paper sx={{ width: '90vw', height: '60vh', backgroundColor: 'white', borderRadius: '20px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}>
-           {/*=========radio buttons top==============  */}
+            {/*=========radio buttons top==============  */}
             <FormControl sx={{ padding: "40px 20px" }}>
               <RadioGroup
                 row
@@ -116,7 +77,7 @@ export default function Home() {
                 <FormControlLabel value="other" control={<Radio />} label="Multi-city" />
               </RadioGroup>
             </FormControl>
-            
+
             <Box sx={{ display: "flex", alignItems: 'center', flexWrap: "nowrap", padding: '30px', gap: "10px", justifyContent: "center" }}>
               <Box sx={{ position: 'relative' }}>
                 <TextField
@@ -131,17 +92,21 @@ export default function Home() {
                   onChange={(e) => setSource(e.target.value)}
                 />
                 {opensource &&
-                  <Box sx={{ width: "300px", height: "300px", backgroundColor: "red", position: 'absolute', top: '58px', left: '0px' }}>
-                    {sourcedata && sourcedata.map((item, index) => (
-                      <div key={index} onClick={() => {setSource(item.iata_code), setopensource(false)}}>
-                        <div>
-                          <img src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
-                          <p>{item.city}</p>
-                          <p>{item.country}</p>
-                          <p>{item.iata_code}</p>
-                          <p>{item.country.slice(0, 2)}</p>
+                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                    {sourcedata && sourcedata.slice(0,6).map((item, index) => (
+                      <div className='p-2  hover:bg-blue-gray-50' key={index} onClick={() => { setSource(item.iata_code), setopensource(false) }}>
+                        <div className='float-right'>
+                          <span className='capitalize'>{item.country.slice(0, 2)}<img className='size-5' src='flag.png' alt='flag' /></span>
                         </div>
-                        <p>{item.name}</p>
+                        <div className='flex p-1'>
+                          <img className='size-7' src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
+                          <div className='flex flex-row'>
+                            <p className='p-1 font-bold'>{item.city},</p>
+                            <p className='p-1 font-bold'>{item.country}</p>
+                            <p className='p-1'>[{item.iata_code}]</p>
+                          </div>
+                        </div>
+                        <p className='ml-8 text-sm'>{item.name}</p>
                       </div>
                     ))}
                   </Box>}
@@ -159,17 +124,22 @@ export default function Home() {
                 // defaultValue="Enter city airport"
                 />
                 {opendest &&
-                  <Box sx={{ width: "300px", height: "300px", backgroundColor: "red", position: "absolute", top: "58px", left: "0px" }}>
-                    {destdata && destdata.map((item, index) => (
-                      <div key={index} onClick={() => {setdestination(item.iata_code), setopendest(false)}}>
-                        <div>
-                          <img src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
-                          <p>{item.city}</p>
-                          <p>{item.country}</p>
-                          <p>{item.iata_code}</p>
-                          <p>{item.country.slice(0, 2)}</p>
+                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                    {destdata && destdata.slice(0,6).map((item, index) => (
+                      <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { setdestination(item.iata_code), setopendest(false) }}>
+                        <div className='float-right'>
+                          <span>{item.country.slice(0, 2)}</span>
+                          <span><img className='size-5' src='flag.png' alt='flag' /></span>
                         </div>
-                        <p>{item.name}</p>
+                        <div className='flex p-1'>
+                          <img className='size-7' src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
+                          <div className='flex flex-row'>
+                            <p className='p-1 font-bold'>{item.city},</p>
+                            <p className='p-1 font-bold'>{item.country}</p>
+                            <p className='p-1'>[{item.iata_code}]</p>
+                          </div>
+                        </div>
+                        <p className='ml-8 text-sm'>{item.name}</p>
                       </div>
                     ))}
                   </Box>}
@@ -181,11 +151,12 @@ export default function Home() {
                     value={value}
                     onChange={(newValue) => setValue(newValue)}
                   />
-                  {/* <DatePicker
+                  <DatePicker
                     label="Return"
+                    disabled="true"
                   // value={value}
                   // onChange={(newValue) => setValue(newValue)}
-                  /> */}
+                  />
                 </DemoContainer>
               </LocalizationProvider>
               <TextField
@@ -198,14 +169,14 @@ export default function Home() {
               />
               <Travellers open={open} setOpen={setOpen} />
             </Box>
-            <Button sx={{
-              padding: "1.5rem", margin: "70px", borderRadius: "50px", fontSize: "20px", fontWeight: "700", marginLeft: "40%"
-              , background: "#FF6D38",
-            }} variant="contained" disableElevation
+            {/* <Button className='flex justify-center items-center p-10' variant="contained" disableElevation
               onClick={() => navigatetoflightresults()}
             >
               SEARCH FLIGHTS
-            </Button>
+            </Button> */}
+            <button class="bg-orange-400 hover:bg-orange-500 rounded-full text-white font-bold p-5 px-4" onClick={() => navigatetoflightresults()} >
+            SEARCH FLIGHTS
+            </button>
           </Paper>
         </div>
       </div>

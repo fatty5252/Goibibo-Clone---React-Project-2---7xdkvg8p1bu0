@@ -107,20 +107,24 @@ export default function FlightResults() {
             onChange={(e) => setSource(e.target.value)}
           />
           {opensource &&
-            <Box sx={{ width: "300px", height: "300px", backgroundColor: "grey", position: 'absolute', top: '50px', left: '0px' }}>
-              {sourcedata && sourcedata.map((item, index) => (
-                <div key={index} onClick={() => { setSource(item.iata_code), setopensource(false) }}>
-                  <div>
-                    <img src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
-                    <p>{item.city}</p>
-                    <p>{item.country}</p>
-                    <p>{item.iata_code}</p>
-                    <p>{item.country.slice(0, 2)}</p>
-                  </div>
-                  <p>{item.name}</p>
-                </div>
-              ))}
-            </Box>}
+             <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+             {sourcedata && sourcedata.slice(0,6).map((item, index) => (
+               <div className='p-2  hover:bg-blue-gray-50' key={index} onClick={() => { setSource(item.iata_code), setopensource(false) }}>
+                 <div className='float-right'>
+                   <span className='capitalize'>{item.country.slice(0, 2)}<img className='size-5' src='flag.png' alt='flag' /></span>
+                 </div>
+                 <div className='flex p-1'>
+                   <img className='size-7' src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
+                   <div className='flex flex-row'>
+                     <p className='p-1 font-bold'>{item.city},</p>
+                     <p className='p-1 font-bold'>{item.country}</p>
+                     <p className='p-1'>[{item.iata_code}]</p>
+                   </div>
+                 </div>
+                 <p className='ml-8 text-sm'>{item.name}</p>
+               </div>
+             ))}
+           </Box>}
         </Box>
         <Box sx={{ position: "relative" }}>
           {/* <CompareArrowsOutlinedIcon sx={{ color: "blue", fontSize: "40px", backgroundColor: 'white', borderRadius: '100%' }} /> */}
@@ -135,20 +139,25 @@ export default function FlightResults() {
           // defaultValue="Enter city airport"
           />
           {opendest &&
-            <Box sx={{ width: "300px", height: "300px", backgroundColor: "red", position: "absolute", top: "50px", left: "0px" }}>
-              {destdata && destdata.map((item, index) => (
-                <div key={index} onClick={() => { setdestination(item.iata_code), setopendest(false) }}>
-                  <div>
-                    <img src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
-                    <p>{item.city}</p>
-                    <p>{item.country}</p>
-                    <p>{item.iata_code}</p>
-                    <p>{item.country.slice(0, 2)}</p>
-                  </div>
-                  <p>{item.name}</p>
-                </div>
-              ))}
-            </Box>}
+           <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px', zIndex:"40"}}>
+           {destdata && destdata.slice(0,6).map((item, index) => (
+             <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { setdestination(item.iata_code), setopendest(false) }}>
+               <div className='float-right'>
+                 <span>{item.country.slice(0, 2)}</span>
+                 <span><img className='size-5' src='flag.png' alt='flag' /></span>
+               </div>
+               <div className='flex p-1'>
+                 <img className='size-7' src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
+                 <div className='flex flex-row'>
+                   <p className='p-1 font-bold'>{item.city},</p>
+                   <p className='p-1 font-bold'>{item.country}</p>
+                   <p className='p-1'>[{item.iata_code}]</p>
+                 </div>
+               </div>
+               <p className='ml-8 text-sm'>{item.name}</p>
+             </div>
+           ))}
+         </Box>}
         </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker']}>
@@ -178,7 +187,7 @@ export default function FlightResults() {
 
         {/* Travellers component call */}
 
-        <Button variant='contained' onClick={()=>navigatetoflightresults()}>Update search</Button>
+        <Button variant='contained' style={{ backgroundColor: 'orangered', color: 'white'}} onClick={()=>navigatetoflightresults()}>Update search</Button>
       </Box>
 
       <Grid container spacing={2}>
@@ -248,13 +257,13 @@ export default function FlightResults() {
         {/* ====================================Main Content============================== */}
 
         <Grid item xs={9}>
-          <Paper elevation={3}>
+          <Paper elevation={3} sx={{width:'91%',marginTop:'10px',marginLeft:'4%'}}>
             <Box p={2} display="flex" flexDirection="row" justifyContent="space-between" >
               <Typography variant="body1">Departure</Typography>
               <Typography variant="body1">Duration</Typography>
               <Typography variant="body1">Arrival</Typography>
               <Typography variant="body1">Price</Typography>
-              <Typography variant="body1">Best</Typography>
+              <Typography variant="body1" className='pr-10'>Best</Typography>
               {/* <Button variant="contained">Hide FARE</Button> */}
             </Box>
           </Paper>
@@ -263,28 +272,58 @@ export default function FlightResults() {
           {/* <Grid item xs={9}> */}
           {flightSerchData && flightSerchData.map((item, index) => (
 
-            <Paper elevation={3} sx={{ margin: "50px", height: `${flightSerchData && selectedCardIndex === index ? '300px' : '100px'}`, position: 'relative' }} key={index}>
+            <Paper elevation={3} sx={{ margin: "50px", height: `${flightSerchData && selectedCardIndex === index ? '300px' : '110px'}`, position: 'relative' }} key={index}>
               <Box p={2} display="flex" flexDirection="row" justifyContent="space-between" >
-                <img src={getAirlineInfo(item.flightID.slice(0, 2)).logoSrc} />
-                <Typography variant="body1">{getAirlineInfo(item.flightID.slice(0, 2)).airlineName}</Typography>
-                <Typography variant="body1">{item.departureTime}</Typography>
-                <Typography variant="body1">{item.duration}</Typography>
-                <Typography variant="body1">{item.arrivalTime}</Typography>
-                <Typography variant="body1">{item.ticketPrice}</Typography>
-                <Button variant="contained">BOOK</Button>
+               <Box>
 
-                <Typography variant="body1" onClick={() => { handleFlightDetails(index), SingleFlightSearch(item._id) }}>Flight Details</Typography>
+               <Box >
+               <Box display="flex" flexDirection="row" >
+                <img src={getAirlineInfo(item.flightID.slice(0, 2)).logoSrc} className='w-5'/>
+                <Typography variant="body1" className=' p-1'>{getAirlineInfo(item.flightID.slice(0, 2)).airlineName}</Typography>
+               </Box>
+               <Typography variant="p" className='text-gray-400 pl-4'>{item.source}</Typography>
+               </Box>
+               <Typography variant="p" className=' text-black bold pl-2 text-xl'>{item.departureTime}</Typography>
+               </Box>
+                <Typography variant="p" className='p-4 pl-16 text-xl'>{item.duration}</Typography>
+
+                <Typography variant="p"className=' pl-24 p-4  text-xl ' >{item.arrivalTime}</Typography>
+                <Typography variant="p" className=' pl-10 p-4  text-xl '>&#8377;{item.ticketPrice}</Typography>
+                <Box className="ml-10">
+                <Button variant="contained" style={{ backgroundColor: 'orangered', color: 'white',padding:"1px 30px" }}>BOOK</Button>
+                {/* <Button variant="contained" className="bg-orange-500 text-white px-30 py-1">BOOK</Button> */}
+
+                <Typography variant="body1" className='pt-6 text-blue-500' style={{ fontSize: '15px', fontWeight: 800 }} onClick={() => { handleFlightDetails(index), SingleFlightSearch(item._id) }}>Flight Details</Typography>
+                </Box>
+
               </Box>
+
+              {/* =================flightSearch======================= */}
 
              {flightSerchData && singleFlightData && selectedCardIndex === index && 
              <Paper elevation={3} sx={{ margin: "50px"}} key={index}>
                 <Box p={2} display="flex" flexDirection="row" justifyContent="space-between" >
+                  <Box>
+
+                  <Box>
                   <img src={getAirlineInfo(singleFlightData?.flightID?.slice(0, 2)).logoSrc} />
-                  <Typography variant="body1">{getAirlineInfo(singleFlightData?.flightID?.slice(0, 2)).airlineName}</Typography>
-                  <Typography variant="body1">{singleFlightData.departureTime}</Typography>
-                  <Typography variant="body1">{singleFlightData.duration}</Typography>
-                  <Typography variant="body1">{singleFlightData.arrivalTime}</Typography>
-                  <Typography variant="body1">{singleFlightData.ticketPrice}</Typography>
+                  <Typography variant="p" className='text-gray-400'>{getAirlineInfo(singleFlightData?.flightID?.slice(0, 2)).airlineName}</Typography>
+                  </Box>
+                  <Typography variant="p" className='text-gray-400'>{singleFlightData.flightID}</Typography>
+                  </Box>
+                  <box display="flex" flexDirection="row" className='p-4' >
+                  <Typography variant="p" className='text-xl px-3'>{singleFlightData.source}</Typography>
+                  <Typography variant="p" className='text-gray-400'>{singleFlightData.departureTime}</Typography>
+                  </box>
+                  <Box className='p-4' >
+                  <Typography variant="p" className='text-orange-500 font-extrabold'>Duration</Typography>
+                  <Typography variant="body1" className=' px-6'>{singleFlightData.duration}</Typography>
+                  </Box>
+                  <box display="flex" flexDirection="row" className='p-4'>
+                  <Typography variant="p" className='text-xl px-3'>{singleFlightData.destination}</Typography>
+                  <Typography variant="p" className='text-gray-400'>{singleFlightData.arrivalTime}</Typography>
+                  </box>
+                  <Typography variant="p" className='p-4 text-green-500  text-xl font-bold'>`&#8377;{singleFlightData.ticketPrice}`</Typography>
                 </Box>
               </Paper>}
             </Paper>

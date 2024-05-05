@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
         setName(data);
         localStorage.setItem('name', data.user);
     }
-    // console.log(getName)
+    console.log(getName)
 
     const FlightSearch = useMemo(async () => {
         try {

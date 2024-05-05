@@ -60,7 +60,7 @@ function Login() {
             }
         }).then((result) => {
             onTokenHandler(result.data.token);
-            onNameHandler(result.data.data.name);
+            onNameHandler(result.data.data.user.name);
             isAuthenticated = true;
             navigate('/');
             setLoginpop(false)

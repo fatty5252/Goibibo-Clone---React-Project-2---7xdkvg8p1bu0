@@ -1,9 +1,19 @@
 
 import { Carousel } from '@material-tailwind/react'
 import { Typography } from '@mui/material'
+import axios from 'axios'
 import React from 'react'
 
 export default function Train() {
+
+  const TrainSearch=async()=>{
+    try{
+      const response = await axios.get()
+    }
+    catch{
+
+    }
+  }
   return (
     <div className="Train-main">
             <div className="train-bg">

@@ -44,7 +44,7 @@ function Navbar() {
 
   const logoutHandler = () => {
     onTokenHandler(null);
-    onNameHandler(null);
+    onNameHandler("");
     localStorage.removeItem('token');
     localStorage.removeItem('name');
   };
