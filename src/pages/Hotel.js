@@ -10,11 +10,14 @@ import { useUser } from '../providers/UserProvider';
 
 
 export default function Hotels() {
-    const {hotelserach, sethotelsearch, hotelData, hotelResults} = useUser();
+    const { hotelserach, sethotelsearch, hotelData, hotelResults } = useUser();
     console.log("hotelData--->", hotelData);
     console.log("hotelResults--->", hotelResults);
 
-  const [value, setValue] = React.useState(dayjs('2022-04-17'));
+    const [value, setValue] = React.useState(dayjs('2022-04-17'));
+    const [openLocation, setOpenLocation] = useState(false);
+
+    
 
     return (
         // <div className="Train-main absolute" style={{marginTop:"100px"}}>
@@ -34,15 +37,36 @@ export default function Hotels() {
                     <Paper className="w-full h-72 p-5 ">
 
                         <Typography>Where</Typography>
-                        
-                        <TextField sx={{mt:2}}  fullWidth type='text' label='eg. - Area Landmark and Property Name'
-                        value={hotelserach}
-                        onChange={(e)=>sethotelsearch(e.target.value)}
+
+                        <TextField sx={{ mt: 2 }} fullWidth type='text' label='eg. - Area Landmark and Property Name'
+                            value={hotelserach}
+                            onChange={(e) => sethotelsearch(e.target.value)}
                         />
-                        
-                        <LocalizationProvider  dateAdapter={AdapterDayjs}>
-                            <DemoContainer sx={{mt:2}} components={['DatePicker', 'DatePicker']}>
-                                <DatePicker  label="Departure"
+
+                        {openLocation &&
+                            <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                                {destdata && destdata.slice(0, 6).map((item, index) => (
+                                    <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { setdestination(item.iata_code), setopendest(false) }}>
+                                        <div className='float-right'>
+                                            <span>{item.country.slice(0, 2)}</span>
+                                            <span><img className='size-5' src='flag.png' alt='flag' /></span>
+                                        </div>
+                                        <div className='flex p-1'>
+                                            <img className='size-7' src="https://gos3.ibcdn.com/flightIcon-1675492260.png" alt="flight Icon" />
+                                            <div className='flex flex-row'>
+                                                <p className='p-1 font-bold'>{item.city},</p>
+                                                <p className='p-1 font-bold'>{item.country}</p>
+                                                <p className='p-1'>[{item.iata_code}]</p>
+                                            </div>
+                                        </div>
+                                        <p className='ml-8 text-sm'>{item.name}</p>
+                                    </div>
+                                ))}
+                            </Box>}
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer sx={{ mt: 2 }} components={['DatePicker', 'DatePicker']}>
+                                <DatePicker label="Departure"
                                     // defaultValue={dayjs('2022-04-17')}
                                     value={value}
                                     onChange={(newValue) => setValue(newValue)}

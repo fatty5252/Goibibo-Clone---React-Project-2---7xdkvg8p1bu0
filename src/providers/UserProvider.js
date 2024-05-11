@@ -16,7 +16,59 @@ export const UserProvider = ({ children }) => {
     const [opensource, setopensource] = useState(false);
     const [opendest, setopendest] = useState(false);
 
+    // ==========================caraosel=============================================================================
 
+    const SamplePrevArrow = (props) => {
+  
+      const { className, style, onClick } = props;
+      return (
+          <div
+              className={`custom-arrow custom-prev-arrow ${className}`}
+              style={{ ...style, display: 'block', background: '#FF5733' }} // Custom styling
+              onClick={onClick}
+          />
+      );
+  };
+  const SampleNextArrow = (props) => {
+      const { className, style, onClick } = props;
+      return (
+          <div
+              className={`custom-arrow custom-next-arrow ${className}`}
+              style={{ ...style, display: 'block', background: '#33FF57' }} // Custom styling
+              onClick={onClick}
+          />
+      );
+  };
+
+    const settings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 2,
+      prevArrow: <SamplePrevArrow />,
+      nextArrow: <SampleNextArrow />,
+      responsive: [
+          {
+              breakpoint: 1024,
+              settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 1,
+                  infinite: true,
+                  dots: true
+              }
+          },
+          {
+              breakpoint: 600,
+              settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  initialSlide: 1
+              }
+          }
+      ]
+  };
+// ==============================================Login HAndlers======================================================
     const onTokenHandler = (data) => {
         setToken(data);
         localStorage.setItem('token', data);
@@ -28,6 +80,8 @@ export const UserProvider = ({ children }) => {
         localStorage.setItem('name', data.user);
     }
     console.log(getName)
+
+    // ================================Flight search API fetch=============================================================
 
     const FlightSearch = useMemo(async () => {
         try {
@@ -73,10 +127,10 @@ export const UserProvider = ({ children }) => {
     setopendest(!opendest)
   }
 
-  // Hotel Search
+  // ================== Hotel Search ==================================
 
   const [hotelserach, sethotelsearch] = useState()
-  const [hotelResults, sethotelResults] = useState()
+  const [hotelLocationResults, sethotelLocationResults] = useState()
 
   const [hotelData, sethotelData] = useState([])
 
@@ -92,7 +146,7 @@ export const UserProvider = ({ children }) => {
       if(hotelserach){
         sethotelData(response.data.data.hotels);
       }else{
-        sethotelResults(response)
+        sethotelLocationResults(response)
       }
 
       // console.log(response.data.data.hotels);
@@ -126,7 +180,7 @@ export const UserProvider = ({ children }) => {
     const object = {
         getToken,getName, onTokenHandler, onNameHandler, loginpop, setLoginpop, source, setSource,destination, setdestination,sourcedata, setsourceData,
         destdata, setdestData, opensource, setopensource,opendest, setopendest,  openSrc, opendesn,FlightSearch,
-        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelResults
+        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelLocationResults,settings,SamplePrevArrow, SampleNextArrow
     }
     return (<div>
         <UserContext.Provider value={object}>
