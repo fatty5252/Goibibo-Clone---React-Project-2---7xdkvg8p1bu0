@@ -9,7 +9,6 @@ import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button'
 import Travellers from '../components/Travellers'
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -64,7 +63,7 @@ export default function Home() {
       <div className='home-background'>
         <Typography variant='h5' sx={{ textAlign: "center", p: "12px", color: "white", fontWeight: '700' }}>Domestic and International Flights</Typography>
         <div className='home-main-section'>
-          <Paper sx={{ width: '90vw', height: '60vh', backgroundColor: 'white', borderRadius: '20px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}>
+          <Paper sx={{ width: '90vw', height: '50vh', backgroundColor: 'white', borderRadius: '20px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}>
             {/*=========radio buttons top==============  */}
             <FormControl sx={{ padding: "40px 20px" }}>
               <RadioGroup
@@ -168,17 +167,15 @@ export default function Home() {
                 onClick={handleOpen}
               />
               <Travellers open={open} setOpen={setOpen} />
-            </Box>
-            {/* <Button className='flex justify-center items-center p-10' variant="contained" disableElevation
-              onClick={() => navigatetoflightresults()}
-            >
-              SEARCH FLIGHTS
-            </Button> */}
-            <button class="bg-orange-400 hover:bg-orange-500 rounded-full text-white font-bold p-5 px-4" onClick={() => navigatetoflightresults()} >
-            SEARCH FLIGHTS
-            </button>
+            </Box>     
+            <Box className="flex justify-center mt-7 p-10">
+            <button  onClick={() => navigatetoflightresults()} className='text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full w-60'>SEARCH FLIGHTS</button>
+          </Box>
           </Paper>
         </div>
+        <Box className="flex justify-center mt-24 ">
+          <img className='rounded-lg' src='homeimg.png' alt='bannerHome'/>
+        </Box>
       </div>
     </div>
   )

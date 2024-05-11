@@ -1,23 +1,61 @@
-import { Carousel } from "@material-tailwind/react";
- 
-export function CarouselDefault() {
+import React, { useEffect, useRef, useState } from "react";
+import style from "../styles/Crousel.css";
+// import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useNavigate } from "react-router-dom";
+
+
+const Carousel = ({ data = [] }) => {
+  const [slide, setSlide] = useState(0);
+  const nextSlide = () => {
+    setSlide(slide === data.length - 1 ? 0 : slide + 1);
+  };
+  const prevSlide = () => {
+    setSlide(slide === 0 ? data.length - 1 : slide - 1);
+  };
+  const navigate = useNavigate();
+  useEffect(() => {
+    const timer = setInterval(
+      () =>
+        setSlide((currentSlide) =>
+          currentSlide === data.length - 1 ? 0 : currentSlide + 1
+        ),
+      5000
+    );
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
   return (
-    <Carousel className="rounded-xl">
-      <img
-        src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
-        alt="image 1"
-        className="h-full w-full object-cover"
-      />
-      <img
-        src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
-        alt="image 2"
-        className="h-full w-full object-cover"
-      />
-      <img
-        src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-        alt="image 3"
-        className="h-full w-full object-cover"
-      />
-    </Carousel>
+    <div className={style.carousel}>
+      <ChevronLeftIcon className={style.arrow_left} onClick={prevSlide} />
+      {data.map((item, idx) => {
+        return (
+          <img
+            src={item.src}
+            alt={item.alt}
+            key={idx}
+            className={slide === idx ? style.slides : style.slide_hidden}
+            onClick={() => navigate(item.href)}
+          />
+        );
+      })}
+      <ChevronRightIcon className={style.arrow_right} onClick={nextSlide} />
+      <span className={style.indicators}>
+        {data.map((_, idx) => {
+          return (
+            <button
+              key={idx}
+              className={
+                slide === idx ? style.indicator : style.indicator_inactive
+              }
+              onClick={() => setSlide(idx)}
+            ></button>
+          );
+        })}
+      </span>
+    </div>
   );
-}
+};
+export default Carousel;
