@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import axios from 'axios';
-import { projectID, serachHOtelURL } from "../components/Constrains";
+import { projectID, serachHOtelURL, trainSearchURL } from "../components/Constrains";
 
 const UserContext = createContext();
 
@@ -28,45 +28,6 @@ export const UserProvider = ({ children }) => {
               onClick={onClick}
           />
       );
-  };
-  const SampleNextArrow = (props) => {
-      const { className, style, onClick } = props;
-      return (
-          <div
-              className={`custom-arrow custom-next-arrow ${className}`}
-              style={{ ...style, display: 'block', background: '#33FF57' }} // Custom styling
-              onClick={onClick}
-          />
-      );
-  };
-
-    const settings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 2,
-      prevArrow: <SamplePrevArrow />,
-      nextArrow: <SampleNextArrow />,
-      responsive: [
-          {
-              breakpoint: 1024,
-              settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 1,
-                  infinite: true,
-                  dots: true
-              }
-          },
-          {
-              breakpoint: 600,
-              settings: {
-                  slidesToShow: 1,
-                  slidesToScroll: 1,
-                  initialSlide: 1
-              }
-          }
-      ]
   };
 // ==============================================Login HAndlers======================================================
     const onTokenHandler = (data) => {
@@ -131,6 +92,8 @@ export const UserProvider = ({ children }) => {
 
   const [hotelserach, sethotelsearch] = useState()
   const [hotelLocationResults, sethotelLocationResults] = useState()
+  const [openLocation, setOpenLocation] = useState(false);
+
 
   const [hotelData, sethotelData] = useState([])
 
@@ -153,11 +116,35 @@ export const UserProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
-  },[hotelserach])
+  },[hotelserach, openLocation])
 
   useEffect(()=>{
     HotelSearch;
   },[])
+
+  // // ============================Train Search API================================
+  // const [trainSearchData, setTrainSearchData] = useState([]);
+  // const [trainSearch, setTrainSearch] = useState();
+
+  // const TrainSearch = useMemo (async () => {
+  //   try {
+  //     const response = await axios.get(trainSearch ? `${trainSearchURL}?serch=("location:${trainSearch})` : `${trainSearchURL}`, {
+  //       headers: {
+  //         projectId: projectID
+  //       }      
+  //     });
+  //     if (trainSearch){
+  //       setTrainSearchData(response.data.data.trains);
+  //     }
+  //     else {
+  //       setTrainSearch(response);
+  //     }
+  //   }
+  //   catch {
+
+  //   }
+  // },[trainSearch])
+
 
     //get flight image and name
 
@@ -180,7 +167,8 @@ export const UserProvider = ({ children }) => {
     const object = {
         getToken,getName, onTokenHandler, onNameHandler, loginpop, setLoginpop, source, setSource,destination, setdestination,sourcedata, setsourceData,
         destdata, setdestData, opensource, setopensource,opendest, setopendest,  openSrc, opendesn,FlightSearch,
-        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelLocationResults,settings,SamplePrevArrow, SampleNextArrow
+        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelLocationResults, openLocation, setOpenLocation
+        // TrainSearch, trainSearchData, setTrainSearchData, trainSearch, setTrainSearch
     }
     return (<div>
         <UserContext.Provider value={object}>

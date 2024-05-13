@@ -55,7 +55,7 @@ export default function Home() {
 
 
   const navigatetoflightresults = () => {
-    navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
+   source && destination && navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
   }
 
 
@@ -92,8 +92,8 @@ export default function Home() {
                   onChange={(e) => setSource(e.target.value)}
                 />
                 {opensource &&
-                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
-                    {sourcedata && sourcedata.slice(0,6).map((item, index) => (
+                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll h-48 w-11" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                    {sourcedata && sourcedata.map((item, index) => (
                       <div className='p-2  hover:bg-blue-gray-50' key={index} onClick={() => { setSource(item.iata_code), setopensource(false) }}>
                         <div className='float-right'>
                           <span className='capitalize'>{item.country.slice(0, 2)}<img className='size-5' src='flag.png' alt='flag' /></span>

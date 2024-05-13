@@ -24,15 +24,11 @@ export default function Hotels() {
     const handleSearchHotel = () => {
         // setall(prev => ({ ...prev, inputValue: inputValue }));
         hotelserach && value && navigate(`/HotelResults/data?city=${hotelserach}&from=${value}&to=${value}`)
+        // console.log("search clicked");
     }
 
     return (
-        // <div className="Train-main absolute" style={{marginTop:"100px"}}>
-        //     <div className="train-bg">
-        //         <Typography className='relative top-10 m-10'>hellooo</Typography>
-        //     </div>
-
-        // </div>
+       
         <div className=''>
             <div className="bg-orange-400 rounded-full h-3/5 absolute w-3/5 -ml-5 rounded-tl-lg rounded-tr-lg ">
                 <div className=" w-2/4">
@@ -85,7 +81,7 @@ export default function Hotels() {
                             </LocalizationProvider>
                             {/* <Button onClick={handleSearchHotel}>Search</Button> */}
                             <Box className="flex justify-center mt-4 p-10">
-                                <button onClick={()=>handleSearchHotel} className='text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full mt-20 w-60'>SEARCH</button>
+                                <button onClick={handleSearchHotel} className='text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full mt-20 w-60'>SEARCH</button>
                             </Box>
                         </Paper>
                     </div>

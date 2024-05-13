@@ -20,11 +20,11 @@ export default function HotelResults() {
     console.log(city)
 
     const navigate = useNavigate();
-    const { sethotelsearch, hotelData, hotelLocationResults } = useUser()
+    const { sethotelsearch, hotelData, HotelResults ,openLocation, setOpenLocation, hotelserach, sethotelLocationResults  } = useUser()
 
-    const [hotelserach, setHotelSearchResults] = useState([])
-    const [openLocation, setOpenLocation] = useState(false);
-    const [value, setValue] = React.useState(dayjs('2022-04-17'));
+    // const [hotelLocation, setHotelLocation] = useState(city);
+    // const [hotelserach, setHotelSearchResults] = useState([])
+    const [value, setValue] = React.useState(dayjs(new Date()));
     const [checked, setChecked] = React.useState(true);
 
 
@@ -35,25 +35,26 @@ export default function HotelResults() {
 
     //Hotel Results
 
-    const HotelResults = useMemo(async () => {
-        try {
-            let url;
-            url = `${serachHOtelURL}?search={"location":"${city}"}`;
-            const response = await axios.get(url, {
-                headers: {
-                    projectId: projectID,
-                },
-            });
-            console.log("response---->", response.data.data.hotels);
-            setHotelSearchResults(response.data.data.hotels)
-        } catch (err) {
-            console.log(err);
-        }
-    }, [city])
+    // const HotelResults = useMemo(async () => {
+    //     try {
+    //         let url;
+    //         url = `${serachHOtelURL}?search={"location":"${city}"}`;
+    //         const response = await axios.get(url, {
+    //             headers: {
+    //                 projectId: projectID,
+    //             },
+    //         });
+    //         console.log("response---->", response.data.data.hotels);
+    //         setHotelSearchResults(response.data.data.hotels)
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }, [city])
+    // console.log(hotelserach);
 
-    useEffect(() => {
-        HotelResults
-    }, [])
+    // useEffect(() => {
+    //     HotelResults
+    // }, [])
 
     const handleSearchHotel = () => {
         // setall(prev => ({ ...prev, inputValue: inputValue }));
@@ -184,15 +185,14 @@ export default function HotelResults() {
                         {/* </Grid> */}
 
                         {/* <Grid item xs={9}> */}
-                        {hotelserach && hotelserach.map((item, index) => (
-
-                            <Paper elevation={5} sx={{ margin: "50px 30px", position: 'relative', width: '91%', height: '300px' }} >
+                        {hotelData?.length > 0 && hotelData?.map((item, index) => (
+                            <Paper key={index} elevation={5} sx={{ margin: "50px 30px", position: 'relative', width: '91%', height: '300px' }} >
                                 <Box p={2} display="flex" flexDirection="row" justifyContent="space-between" >
                                     <Box sx={{ border: '1px solid red' }}>
-                                        <img src={item.images[0]}  className='w-48 h-48'  />
+                                        <img src={item.images[0]} className='w-48 h-48' />
                                         {item?.images.map((item, index) =>
-                                            <Box  display="flex" justifyContent="center">
-                                                <img src={item} className='w-8 h-8'  />
+                                            <Box key={index} display="flex" justifyContent="center">
+                                                <img src={item} className='w-8 h-8' />
                                             </Box>
                                         )}
                                     </Box>

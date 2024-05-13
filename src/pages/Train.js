@@ -12,25 +12,18 @@ import TrainOffrsCarousel from '../components/TrainOffrs';
 import Slider from 'react-slick';
 import { useUser } from '../providers/UserProvider';
 import CompOne from '../components/TrainOffrs';
+import { trainSearchURL } from '../components/Constrains';
 
 export default function Train() {
 
-  const {settings, } = useUser();
+  const {settings } = useUser();
 
 
   
 
  
 
-  const TrainSearch = async () => {
-    try {
-      const response = await axios.get()
-    }
-    catch {
-
-    }
-  }
-
+  
   return (
     <div className="Train-main bg-blue-100">
       <div className="train-bg bg-blue-100">

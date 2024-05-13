@@ -27,7 +27,7 @@ export default function FlightResults() {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const [value, setValue] = React.useState(dayjs('2022-04-17'));
+  const [value, setValue] = React.useState(dayjs(new Date()));
   // console.log(flightFrom)
   const [checked, setChecked] = React.useState(true);
   const [flightSerchData, setFlightsearch] = useState([]);
@@ -289,7 +289,7 @@ export default function FlightResults() {
 
                 <Typography variant="p"className=' pl-24 p-4  text-xl ' >{item.arrivalTime}</Typography>
                 <Typography variant="p" className=' pl-10 p-4  text-xl '>&#8377;{item.ticketPrice}</Typography>
-                <Box className="ml-10">
+                <Box onClick={()=>navigate('/FlightReview')} className="ml-10">
                 <Button variant="contained" style={{ backgroundColor: 'orangered', color: 'white',padding:"1px 30px" }}>BOOK</Button>
                 {/* <Button variant="contained" className="bg-orange-500 text-white px-30 py-1">BOOK</Button> */}
 
