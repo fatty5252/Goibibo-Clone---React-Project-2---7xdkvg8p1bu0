@@ -36,16 +36,25 @@ const settings = {
 };
 const CompOne = () => {
   const dynamicData=[
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
-    {"name": "Men's Black Typographic Slim Fit Tracksuit"},
+    {"name": "Men's Black Typographic Slim Fit Tracksuit",
+      "img":"/trainCrousel1.avif"
+    },
+    {"name": "Men's Black Typographic Slim Fit Tracksuit",
+      "img":"/trainCrousel1.avif"
+    },
+    {"name": "Men's Black Typographic Slim Fit Tracksuit",
+      "img":"/trainCrousel1.avif"
+    },
+    {"name": "Men's Black Typographic Slim Fit Tracksuit",
+      "img":"/trainCrousel1.avif"
+    },
+    {"name": "Men's Black Typographic Slim Fit Tracksuit",
+      "img":"/trainCrousel1.avif"
+    },
+    {"name": "Men's Black Typographic Slim Fit Tracksuit",
+      "img":"/trainCrousel1.avif"
+    },
+    
   ]
   return (
     <div className="app-container">
@@ -53,6 +62,7 @@ const CompOne = () => {
         {dynamicData.length > 0 ? (
           dynamicData.map((song) => (
             <div>
+              <img src={song.img}/>
               <h3>{song.name}</h3>
             </div>
           ))

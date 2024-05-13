@@ -106,7 +106,7 @@ function Navbar() {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))} */}
-                <NavLink to={'/Flight'}>
+                <NavLink to={'/'}>
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">Flights</Typography>
                   </MenuItem>
@@ -160,7 +160,7 @@ function Navbar() {
               </Button>
             ))} */}
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, }}>
-                <NavLink to={'/Fight'}>
+                <NavLink to={'/'}>
                   <Button className='categoryParent'
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'flex', gap: '5px', alignItems: 'center', pl: '50px' }}

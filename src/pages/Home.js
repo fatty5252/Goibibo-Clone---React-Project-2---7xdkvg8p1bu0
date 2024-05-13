@@ -38,7 +38,8 @@ export default function Home() {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const [value, setValue] = React.useState(dayjs('2022-04-17'));
+  
+  const [value, setValue] = React.useState(dayjs(new Date()));
 
   // const day = value && value.$d.split(" ").slice(0,4)
   // console.log(day)

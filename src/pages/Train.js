@@ -135,10 +135,10 @@ export default function Train() {
         </Box>
       </Box>
       </Box>
-      <Box className="flex justify-center w-3/4 border-spacing-1 border-">
+      {/* <Box className="flex justify-center w-3/4 border-spacing-1 border-"> */}
       
       
-       <div className="">
+       <div className="w-40">
     <CompOne/>
        </div>
 
@@ -147,7 +147,7 @@ export default function Train() {
        </Box>
   
       
-      </Box>
+      {/* </Box> */}
       </Box>
       
 

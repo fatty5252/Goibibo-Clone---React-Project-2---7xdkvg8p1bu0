@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "../pages/Home";
 import Bus from "../pages/Bus";
-import Flight from "../pages/Flight";
 import Train from "../pages/Train";
 // import { Hotel } from "@mui/icons-material";
 import Login from "./Login";
@@ -21,7 +20,7 @@ function App() {
       {/* <CompOne/> */}
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route index path="/Flight" element={<Home/>}/>
+        {/* <Route index path="/Flight" element={<Home/>}/> */}
         <Route path="/Bus" element={<Bus/>}/>
         <Route path="/Train" element={<Train/>}/>
         {/* <Route path="/Hotel" element={<Hotel/>}/> */}
