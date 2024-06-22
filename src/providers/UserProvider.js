@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import axios from 'axios';
 import { projectID, serachHOtelURL, trainSearchURL } from "../components/Constrains";
+import dayjs from "dayjs";
 
 const UserContext = createContext();
 
@@ -16,19 +17,7 @@ export const UserProvider = ({ children }) => {
     const [opensource, setopensource] = useState(false);
     const [opendest, setopendest] = useState(false);
 
-    // ==========================caraosel=============================================================================
-
-    const SamplePrevArrow = (props) => {
-  
-      const { className, style, onClick } = props;
-      return (
-          <div
-              className={`custom-arrow custom-prev-arrow ${className}`}
-              style={{ ...style, display: 'block', background: '#FF5733' }} // Custom styling
-              onClick={onClick}
-          />
-      );
-  };
+ 
 // ==============================================Login HAndlers======================================================
     const onTokenHandler = (data) => {
         setToken(data);
@@ -40,7 +29,7 @@ export const UserProvider = ({ children }) => {
         setName(data);
         localStorage.setItem('name', data.user);
     }
-    console.log(getName)
+    // console.log(getName)
 
     // ================================Flight search API fetch=============================================================
 
@@ -63,12 +52,15 @@ export const UserProvider = ({ children }) => {
     
           if (opensource) {
             setsourceData(response.data.data.airports);
+          console.log(response);
+
           } else if (opendest) {
             console.log(response)
             setdestData(response.data.data.airports);
+          console.log(response);
+
           }
     
-          console.log(response);
         } catch (err) {
           console.log(err);
         }
@@ -112,7 +104,7 @@ export const UserProvider = ({ children }) => {
         sethotelLocationResults(response)
       }
 
-      // console.log(response.data.data.hotels);
+      console.log(response.data.data.hotels);
     } catch (err) {
       console.log(err);
     }
@@ -122,29 +114,32 @@ export const UserProvider = ({ children }) => {
     HotelSearch;
   },[])
 
-  // // ============================Train Search API================================
-  // const [trainSearchData, setTrainSearchData] = useState([]);
-  // const [trainSearch, setTrainSearch] = useState();
+  // // ============================Date set================================
+  const [value, setValue] = useState(dayjs(new Date()));
 
-  // const TrainSearch = useMemo (async () => {
-  //   try {
-  //     const response = await axios.get(trainSearch ? `${trainSearchURL}?serch=("location:${trainSearch})` : `${trainSearchURL}`, {
-  //       headers: {
-  //         projectId: projectID
-  //       }      
-  //     });
-  //     if (trainSearch){
-  //       setTrainSearchData(response.data.data.trains);
-  //     }
-  //     else {
-  //       setTrainSearch(response);
-  //     }
-  //   }
-  //   catch {
-
-  //   }
-  // },[trainSearch])
-
+  // Increment the date by one day
+  // const nextDay = value.add(1, 'day');
+  
+  // Extract the date object
+  const dateObj = new Date(value.$d);
+  
+    // Create formatter for day, month, weekday, and year
+    const dayFormatter = new Intl.DateTimeFormat('en-GB', { day: '2-digit' });
+    const monthFormatter = new Intl.DateTimeFormat('en-GB', { month: 'short' });
+    const weekdayFormatter = new Intl.DateTimeFormat('en-GB', { weekday: 'short' });
+    const yearFormatter = new Intl.DateTimeFormat('en-GB', { year: 'numeric' });
+  
+    // Format parts
+    const day = dayFormatter.format(dateObj);
+    const month = monthFormatter.format(dateObj);
+    const weekday = weekdayFormatter.format(dateObj);
+    const year = yearFormatter.format(dateObj);
+  
+    // Combine into the desired format
+    const formattedDate = `${day} ${month}, ${weekday} ${year}`;
+  
+    console.log(formattedDate); // Output: "21 Jun, Fri 2024"
+  
 
     //get flight image and name
 
@@ -167,8 +162,9 @@ export const UserProvider = ({ children }) => {
     const object = {
         getToken,getName, onTokenHandler, onNameHandler, loginpop, setLoginpop, source, setSource,destination, setdestination,sourcedata, setsourceData,
         destdata, setdestData, opensource, setopensource,opendest, setopendest,  openSrc, opendesn,FlightSearch,
-        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelLocationResults, openLocation, setOpenLocation
-        // TrainSearch, trainSearchData, setTrainSearchData, trainSearch, setTrainSearch
+        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelLocationResults, openLocation, setOpenLocation,
+        value, formattedDate,
+       
     }
     return (<div>
         <UserContext.Provider value={object}>

@@ -92,7 +92,7 @@ export default function Home() {
                   onChange={(e) => setSource(e.target.value)}
                 />
                 {opensource &&
-                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll h-48 w-11" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll" sx={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
                     {sourcedata && sourcedata.map((item, index) => (
                       <div className='p-2  hover:bg-blue-gray-50' key={index} onClick={() => { setSource(item.iata_code), setopensource(false) }}>
                         <div className='float-right'>
@@ -124,7 +124,7 @@ export default function Home() {
                 // defaultValue="Enter city airport"
                 />
                 {opendest &&
-                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll" sx={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
                     {destdata && destdata.slice(0,6).map((item, index) => (
                       <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { setdestination(item.iata_code), setopendest(false) }}>
                         <div className='float-right'>

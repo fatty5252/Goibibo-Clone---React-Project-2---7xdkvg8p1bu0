@@ -60,7 +60,7 @@ export default function FlightResults() {
         },
       });
       setFlightsearch(response.data.data.flights);
-      console.log(response.data.data.flights);
+      // console.log(response.data.data.flights);
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -89,6 +89,9 @@ export default function FlightResults() {
   
   const navigatetoflightresults = () => {
     navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${day}`)
+  }
+  const navigatetoflightReview = (id) => {
+    navigate(`/FlightReview/data?source=${source}&destination=${destination}&day=${day}&id=${id}`)
   }
 
 
@@ -289,8 +292,8 @@ export default function FlightResults() {
 
                 <Typography variant="p"className=' pl-24 p-4  text-xl ' >{item.arrivalTime}</Typography>
                 <Typography variant="p" className=' pl-10 p-4  text-xl '>&#8377;{item.ticketPrice}</Typography>
-                <Box onClick={()=>navigate('/FlightReview')} className="ml-10">
-                <Button variant="contained" style={{ backgroundColor: 'orangered', color: 'white',padding:"1px 30px" }}>BOOK</Button>
+                <Box  className="ml-10">
+                <Button onClick={()=>navigatetoflightReview(item._id)} variant="contained" style={{ backgroundColor: 'orangered', color: 'white',padding:"1px 30px" }}>BOOK</Button>
                 {/* <Button variant="contained" className="bg-orange-500 text-white px-30 py-1">BOOK</Button> */}
 
                 <Typography variant="body1" className='pt-6 text-blue-500' style={{ fontSize: '15px', fontWeight: 800 }} onClick={() => { handleFlightDetails(index), SingleFlightSearch(item._id) }}>Flight Details</Typography>

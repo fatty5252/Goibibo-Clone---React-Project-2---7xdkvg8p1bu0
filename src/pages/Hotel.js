@@ -45,7 +45,7 @@ export default function Hotels() {
                                 onChange={(e) => sethotelsearch(e.target.value)}
                                 onClick={() => setOpenLocation(!openLocation)}
                             />
-                            {openLocation && <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '150px', zIndex: '1', left: '50px' }}>
+                            {openLocation && <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-scroll" sx={{ width: "300px", height: "350px", backgroundColor: "white", position: 'absolute', top: '150px', zIndex: '1', left: '50px' }}>
                                 {hotelData && hotelData.map((item, index) => (
                                     <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { sethotelsearch(item.location), setOpenLocation(false) }}>
                                         <div className='float-right'>
@@ -67,18 +67,21 @@ export default function Hotels() {
 
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer sx={{ mt: 2 }} components={['DatePicker', 'DatePicker']}>
-                                    <DatePicker label="Departure"
+                                    <DatePicker label="Cheack-In"
                                         // defaultValue={dayjs('2022-04-17')}
+                                        placeholder={value}
                                         value={value}
                                         onChange={(newValue) => setValue(newValue)}
                                     />
                                     <DatePicker
-                                        label="Return"
-                                    // value={value}
-                                    // onChange={(newValue) => setValue(newValue)}
+                                        label="Cheack-out"
+                                        placeholder={value}
+                                    value={value}
+                                    onChange={(newValue) => setValue(newValue)}
                                     />
                                 </DemoContainer>
                             </LocalizationProvider>
+                            <Box>Guest & Adults</Box>
                             {/* <Button onClick={handleSearchHotel}>Search</Button> */}
                             <Box className="flex justify-center mt-4 p-10">
                                 <button onClick={handleSearchHotel} className='text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full mt-20 w-60'>SEARCH</button>

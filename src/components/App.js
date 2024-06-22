@@ -10,6 +10,10 @@ import Footer from "./Footer.js";
 import Hotels from "../pages/Hotel.js";
 import CompOne from "./TrainOffrs.js";
 import HotelResults from "../pages/HotelResults.js";
+import FlightReview from "../pages/FlightReview.js";
+import TrainResult from "../pages/TrainResult.js";
+import BusResults from "../pages/BusResults.js";
+
 // import Layout from "./Layout"; // Import the Layout component
 
 
@@ -28,6 +32,9 @@ function App() {
         <Route path="/Login" element={<Login/>}/>
         <Route path="/FlightResult/:data" element={<FlightResults/>}/>
         <Route path="/HotelResults/:data" element={<HotelResults/>}/>
+        <Route path="/FlightReview/:data" element={<FlightReview/>}/>
+        <Route path="/TrainResult/:data" element={<TrainResult/>}/>
+        <Route path="/BusResults/:data" element={<BusResults/>}/>
 
       </Routes>
     

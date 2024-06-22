@@ -5,15 +5,19 @@ body {
     font-family: 'Arial', sans-serif;
   }
   .app-container {
-    width: 98vw;
-    height: 100vh;
+    width: 90%;
+    height: 70%;
+    /* height: 100vh; */
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 20px;
+    
   }
   .slick-slider {
     width: 98%;
     position: relative;
+    
   }
   /* Style for the carousel arrows */
   .custom-arrow {

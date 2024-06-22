@@ -29,41 +29,39 @@ const settings = {
   dots: false,
   infinite: true,
   speed: 500,
-  slidesToShow: 5,
+  slidesToShow: 3,
   slidesToScroll: 2,
   prevArrow: <SamplePrevArrow />,
   nextArrow: <SampleNextArrow />,
 };
 const CompOne = () => {
   const dynamicData=[
-    {"name": "Men's Black Typographic Slim Fit Tracksuit",
+    {"name": "Valid till: Limited Petiod",
       "img":"/trainCrousel1.avif"
     },
-    {"name": "Men's Black Typographic Slim Fit Tracksuit",
-      "img":"/trainCrousel1.avif"
+    {"name": "Valid till: Limited Petiod",
+      "img":"/trainCrousel2.avif"
     },
-    {"name": "Men's Black Typographic Slim Fit Tracksuit",
-      "img":"/trainCrousel1.avif"
+    {"name": "Valid till: Limited Petiod",
+      "img":"/trainCrousel3.avif"
     },
-    {"name": "Men's Black Typographic Slim Fit Tracksuit",
-      "img":"/trainCrousel1.avif"
+    {"name": "Valid till: Limited Petiod",
+      "img":"/trainCrousel4.avif"
     },
-    {"name": "Men's Black Typographic Slim Fit Tracksuit",
-      "img":"/trainCrousel1.avif"
+    {"name": "Valid till: Exclusive for students",
+      "img":"/trainCrousel5.avif"
     },
-    {"name": "Men's Black Typographic Slim Fit Tracksuit",
-      "img":"/trainCrousel1.avif"
-    },
+   
     
   ]
   return (
     <div className="app-container">
       <Slider {...settings}>
         {dynamicData.length > 0 ? (
-          dynamicData.map((song) => (
-            <div>
-              <img src={song.img}/>
-              <h3>{song.name}</h3>
+          dynamicData.map((item,index) => (
+            <div key={index} className=''>
+              <img src={item.img}/>
+              <h3>{item.name}</h3>
             </div>
           ))
         ) : (
