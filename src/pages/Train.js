@@ -38,64 +38,17 @@ export default function Train() {
     TrainSearch,
     trainOpenSource,
     trainOpenDestination,
+    trainCityObjects,
+    
   } = useTrainUser();
 
-  const trainCityObjects = [
-    { station: "Delhi Junction", city: "Delhi", country: "India" },
-    { station: "Dhanbad Junction", city: "Dhanbad", country: "India" },
-    { station: "Surat", city: "Surat", country: "India" },
-    { station: "Katpadi Junction", city: "Katpadi", country: "India" },
-    { station: "Kanpur Central", city: "Kanpur", country: "India" },
-    { station: "Kharagpur Junction", city: "Kharagpur", country: "India" },
-    {
-      station: "Thiruvananthapuram Central",
-      city: "Thiruvananthapuram",
-      country: "India",
-    },
-    { station: "Indore Junction", city: "Indore", country: "India" },
-    { station: "Chandigarh", city: "Chandigarh", country: "India" },
-    { station: "Gwalior Junction", city: "Gwalior", country: "India" },
-    { station: "Agra Cantonment", city: "Agra", country: "India" },
-    { station: "Ambala Cantonment", city: "Ambala", country: "India" },
-    { station: "Bhusaval Junction", city: "Bhusaval", country: "India" },
-    { station: "Manmad Junction", city: "Manmad", country: "India" },
-    { station: "Thrissur", city: "Thrissur", country: "India" },
-    {
-      station: "Visakhapatnam Junction",
-      city: "Visakhapatnam",
-      country: "India",
-    },
-    { station: "Khurda Road Junction", city: "Khurda Road", country: "India" },
-    { station: "Ahmedabad Junction", city: "Ahmedabad", country: "India" },
-    { station: "Moradabad Junction", city: "Moradabad", country: "India" },
-    {
-      station: "Secunderabad Junction",
-      city: "Secunderabad",
-      country: "India",
-    },
-    { station: "Nagpur Junction", city: "Nagpur", country: "India" },
-    { station: "Howrah Junction", city: "Howrah", country: "India" },
-    { station: "Mysuru Junction", city: "Mysuru", country: "India" },
-    { station: "Amritsar Junction", city: "Amritsar", country: "India" },
-    { station: "Pune Junction", city: "Pune", country: "India" },
-    { station: "Raipur Junction", city: "Raipur", country: "India" },
-    { station: "New Delhi", city: "New Delhi", country: "India" },
-    { station: "Jhansi Junction", city: "Jhansi", country: "India" },
-    { station: "Varanasi Junction", city: "Varanasi", country: "India" },
-    { station: "Guwahati", city: "Guwahati", country: "India" },
-    { station: "Asansol Junction", city: "Asansol", country: "India" },
-    { station: "Nadiad Junction", city: "Nadiad", country: "India" },
-    { station: "Bhopal Junction", city: "Bhopal", country: "India" },
-    { station: "Yesvantpur Junction", city: "Yesvantpur", country: "India" },
-    { station: "Kollam Junction", city: "Kollam", country: "India" },
-    { station: "Ludhiana Junction", city: "Ludhiana", country: "India" },
-    { station: "Bengaluru Cantt", city: "Bengaluru", country: "India" },
-    { station: "Vijayawada Junction", city: "Vijayawada", country: "India" },
-    { station: "Warangal", city: "Warangal", country: "India" },
-    { station: "Anand Junction", city: "Anand", country: "India" },
-    { station: "Hubli Junction", city: "Hubli", country: "India" },
-    { station: "Jodhpur Junction", city: "Jodhpur", country: "India" },
-  ];
+  const navigatetoTrainresults = () => {
+    trainSrc &&
+      trainDest &&
+      navigate(
+        `/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`
+      );
+  };
 
   const [value, setValue] = React.useState(dayjs(new Date()));
 
@@ -107,13 +60,7 @@ export default function Train() {
   const dayOfWeek = dateObj.toLocaleDateString("en-GB", options); // Using 'en-GB' locale for the day of the week
   console.log(dayOfWeek);
 
-  const navigatetoTrainresults = () => {
-    trainSrc &&
-      trainDest &&
-      navigate(
-        `/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`
-      );
-  };
+ 
 
   return (
     <div className="Train-main bg-blue-100">
@@ -184,10 +131,8 @@ export default function Train() {
               />
               {trainOpenSrc && (
                 <Box
-                  className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll h-48 w-11"
+                  className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll h-[500px] w-80"
                   sx={{
-                    width: "300px",
-                    height: "auto",
                     backgroundColor: "white",
                     position: "absolute",
                     top: "58px",
@@ -237,10 +182,8 @@ export default function Train() {
               />
               {trainOpenDest && (
                 <Box
-                  className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg"
+                  className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll h-[500px] w-80"
                   sx={{
-                    width: "300px",
-                    height: "auto",
                     backgroundColor: "white",
                     position: "absolute",
                     top: "58px",
