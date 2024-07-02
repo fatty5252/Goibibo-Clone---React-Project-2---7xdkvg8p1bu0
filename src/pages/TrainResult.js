@@ -297,8 +297,8 @@ const navigate = useNavigate();
                       <Typography variant="h6">{item.trainName}</Typography>
                     </Box>
                     <Box className="flex row gap-3 ">
-                      <Typography>VIEW ROUTE</Typography>
-                      <Typography>Runs in: {item.data.trains.daysOfOperation}</Typography>
+                      <Button>VIEW ROUTE</Button>
+                      <Typography>Runs in: <span className="m-2">{item.daysOfOperation}</span></Typography>
                     </Box>
                   </Box>
                   <Box className="flex justify-between">
@@ -336,7 +336,7 @@ const navigate = useNavigate();
                     </Box> 
                     <Box className="flex justify-between items-start flex-col">
                       <Box className="flex gap-48 row w-64 bg-[#F4FAF4] p-1">
-                      <Typography >3A</Typography>
+                      <Typography >2A</Typography>
                       <Typography >3085</Typography>
                       </Box>
                       <Box className="flex justify-between gap-28 row w-64 p-2 bg-[#E9F6EA] ">
@@ -346,7 +346,7 @@ const navigate = useNavigate();
                     </Box>
                     <Box className="flex justify-between items-start flex-col">
                       <Box className="flex gap-48 row w-64 bg-[#FEFBF2] p-1">
-                      <Typography >3A</Typography>
+                      <Typography >1A</Typography>
                       <Typography >3085</Typography>
                       </Box>
                       <Box className="flex justify-between gap-28 row w-64 p-2 bg-[#FEF5E1] ">
