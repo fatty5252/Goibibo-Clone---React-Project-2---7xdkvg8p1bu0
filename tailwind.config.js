@@ -19,3 +19,13 @@ module.exports = withMT({
   plugins: [],
 });
 
+module.exports = {
+  theme: {
+    fontFamily: {
+      rubik: ['Rubik', 'sans-serif'],
+    },
+  },
+  variants: {},
+  plugins: [],
+}
+

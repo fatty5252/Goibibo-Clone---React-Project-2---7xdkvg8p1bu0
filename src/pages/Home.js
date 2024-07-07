@@ -9,7 +9,6 @@ import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button'
 import Travellers from '../components/Travellers'
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -39,7 +38,8 @@ export default function Home() {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const [value, setValue] = React.useState(dayjs('2022-04-17'));
+  
+  const [value, setValue] = React.useState(dayjs(new Date()));
 
   // const day = value && value.$d.split(" ").slice(0,4)
   // console.log(day)
@@ -55,16 +55,16 @@ export default function Home() {
 
 
   const navigatetoflightresults = () => {
-    navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
+   source && destination && navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
   }
 
 
   return (
-    <div className='home-main'>
+    <div className='home-main pt-20'>
       <div className='home-background'>
         <Typography variant='h5' sx={{ textAlign: "center", p: "12px", color: "white", fontWeight: '700' }}>Domestic and International Flights</Typography>
         <div className='home-main-section'>
-          <Paper sx={{ width: '90vw', height: '60vh', backgroundColor: 'white', borderRadius: '20px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}>
+          <Paper sx={{ width: '90vw', height: '50vh', backgroundColor: 'white', borderRadius: '20px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}>
             {/*=========radio buttons top==============  */}
             <FormControl sx={{ padding: "40px 20px" }}>
               <RadioGroup
@@ -92,8 +92,8 @@ export default function Home() {
                   onChange={(e) => setSource(e.target.value)}
                 />
                 {opensource &&
-                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
-                    {sourcedata && sourcedata.slice(0,6).map((item, index) => (
+                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll" sx={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                    {sourcedata && sourcedata.map((item, index) => (
                       <div className='p-2  hover:bg-blue-gray-50' key={index} onClick={() => { setSource(item.iata_code), setopensource(false) }}>
                         <div className='float-right'>
                           <span className='capitalize'>{item.country.slice(0, 2)}<img className='size-5' src='flag.png' alt='flag' /></span>
@@ -124,7 +124,7 @@ export default function Home() {
                 // defaultValue="Enter city airport"
                 />
                 {opendest &&
-                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg" sx={{ width: "300px", height: "auto", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll" sx={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
                     {destdata && destdata.slice(0,6).map((item, index) => (
                       <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { setdestination(item.iata_code), setopendest(false) }}>
                         <div className='float-right'>
@@ -168,17 +168,15 @@ export default function Home() {
                 onClick={handleOpen}
               />
               <Travellers open={open} setOpen={setOpen} />
-            </Box>
-            {/* <Button className='flex justify-center items-center p-10' variant="contained" disableElevation
-              onClick={() => navigatetoflightresults()}
-            >
-              SEARCH FLIGHTS
-            </Button> */}
-            <button class="bg-orange-400 hover:bg-orange-500 rounded-full text-white font-bold p-5 px-4" onClick={() => navigatetoflightresults()} >
-            SEARCH FLIGHTS
-            </button>
+            </Box>     
+            <Box className="flex justify-center mt-7 p-10">
+            <button  onClick={() => navigatetoflightresults()} className='text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full w-60'>SEARCH FLIGHTS</button>
+          </Box>
           </Paper>
         </div>
+        <Box className="flex justify-center mt-24 ">
+          <img className='rounded-lg' src='homeimg.png' alt='bannerHome'/>
+        </Box>
       </div>
     </div>
   )

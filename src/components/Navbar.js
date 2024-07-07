@@ -50,7 +50,7 @@ function Navbar() {
   };
   return (
     <div>
-      <AppBar sx={{position:'relative'}}>
+      <AppBar className='fixed top-0 left-0'  sx={{osition:'relative'}}>
         {loginpop && <Typography sx={{position:'absolute', top:'4rem'}}> <Login setLoginpop={setLoginpop} loginpop={loginpop} /> </Typography>}
         <Container maxWidth="xl" className='container-nav'>
           <Toolbar disableGutters >
@@ -106,7 +106,7 @@ function Navbar() {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))} */}
-                <NavLink to={'/Flight'}>
+                <NavLink to={'/'}>
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">Flights</Typography>
                   </MenuItem>
@@ -160,7 +160,7 @@ function Navbar() {
               </Button>
             ))} */}
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, }}>
-                <NavLink to={'/Fight'}>
+                <NavLink to={'/'}>
                   <Button className='categoryParent'
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'flex', gap: '5px', alignItems: 'center', pl: '50px' }}
