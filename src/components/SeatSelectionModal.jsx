@@ -52,7 +52,7 @@ const SeatSelectionModal = () => {
     const upperButtons = ['1UC', '2UC', '3UC', '4UC', '5UC', '6UC', '1UB', '2UB', '3UB', '4UB', '5UB', '6UB', '2UA', '3UA', '4UA', '5UA', '6UA'];
     const lowerButtons = ['1E', '1G', '1A', '2E', '2G', '3E', '3G', '4E', '4G', '5E', '5G', '6E', '6G', '1D', '1F', '2D', '2F', '3D', '3F', '4D', '4F', '5D', '5F', '6D', '6F', '2LA', '3LA', '4LA', '5LA', '6LA'];
     return (
-        <div className="container fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="container pt-12 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="select-seat-main-container p-4 flex bg-white h-5/6 rounded-md gap-4">
                 <div className='seat bg-gray-50 rounded-md overflow-y-scroll shadow-xl p-4 w-[80%]'>
                     <div className="flex justify-between items-center mb-4">

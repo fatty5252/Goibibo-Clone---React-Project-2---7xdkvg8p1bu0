@@ -18,16 +18,13 @@ const MenuProps = {
 };
 
 const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+  'Popularity',
+  'Duration (Shortest to Longest)',
+  'Departure (Earliest to Late)',
+  'Departure (Late to Earliest)',
+  "Arrival (Earliest to Late)",
+  "Arrival (Late to Earliest)",
+  "Availability (High to Low)",
 ];
 
 function getStyles(name, personName, theme) {
@@ -55,16 +52,17 @@ export default function DropDown() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+      <FormControl sx={{ m: 1, p:1, width: 200, borderRadius: "20px" }}>
+        {/* <InputLabel id="demo-multiple-name-label">Name</InputLabel> */}
         <Select
-          labelId="demo-multiple-name-label"
+          // labelId="demo-multiple-name-label"
           id="demo-multiple-name"
-          multiple
+          // multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          // input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
+          defaultValue="Popularity"
         >
           {names.map((name) => (
             <MenuItem

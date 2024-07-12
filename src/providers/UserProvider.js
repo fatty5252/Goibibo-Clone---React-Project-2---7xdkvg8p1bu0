@@ -94,20 +94,19 @@ export const UserProvider = ({ children }) => {
 
   const HotelSearch = useMemo(async () => {
     try {
-      const response = await axios.get(hotelserach ? `${serachHOtelURL}?search={"location":"${hotelserach}"}` : `${serachHOtelURL}`, 
+      const response = await axios.get( `${serachHOtelURL}`, 
         {
         headers: {
           projectId: projectID,
         },
       });
 
-      if(hotelserach){
-        sethotelData(response.data.data.hotels);
-      }else{
-        sethotelLocationResults(response)
-      }
+      
+        const arr = response.data.data.hotels.map(item => { return item.location })
+        sethotelData(new Set(arr));
+        // console.log("hotel data----->", response.data.data.hotels);
+     
 
-      console.log(response.data.data.hotels);
     } catch (err) {
       console.log(err);
     }
@@ -165,7 +164,7 @@ export const UserProvider = ({ children }) => {
     const object = {
         getToken,getName, onTokenHandler, onNameHandler, loginpop, setLoginpop, source, setSource,destination, setdestination,sourcedata, setsourceData,
         destdata, setdestData, opensource, setopensource,opendest, setopendest,  openSrc, opendesn,FlightSearch,
-        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelLocationResults, openLocation, setOpenLocation,
+        getAirlineInfo, hotelserach, sethotelsearch, hotelData, hotelLocationResults, sethotelLocationResults, openLocation, setOpenLocation,
         value, formattedDate,
        
     }

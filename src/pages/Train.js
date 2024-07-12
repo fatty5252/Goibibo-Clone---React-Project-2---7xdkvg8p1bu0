@@ -18,6 +18,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useTrainUser } from "../providers/TrainUser";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Train() {
   const navigate = useNavigate();
@@ -39,15 +41,17 @@ export default function Train() {
     trainOpenSource,
     trainOpenDestination,
     trainCityObjects,
+    getToken,
     
   } = useTrainUser();
 
   const navigatetoTrainresults = () => {
+    trainSrc && trainDest ?
     trainSrc &&
       trainDest &&
       navigate(
         `/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`
-      );
+      ) : toast.error('Please select source and destination');
   };
 
   const [value, setValue] = React.useState(dayjs(new Date()));
@@ -64,6 +68,7 @@ export default function Train() {
 
   return (
     <div className="Train-main bg-blue-100">
+      <ToastContainer position="top-right"/>
       <div className="train-bg bg-blue-100">
         <div className="relative top-10 h-auto border-spacing-5 flex justify-between ml-40 mt-20 w-3/4 text-white font-bold font-sans">
           <div className="text-white font-extrabold font-rubik font-sans text-xl">
@@ -84,13 +89,14 @@ export default function Train() {
         <Paper
           sx={{
             width: "80vw",
-            height: "40vh",
+            height: "45vh",
             mr: "200px",
             ml: "200px",
             mt: "50px",
             backgroundColor: "white",
             borderRadius: "20px",
             boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+            // position: "relative",
           }}
         >
           {/* ======================Radio buttons=================================== */}
@@ -119,7 +125,7 @@ export default function Train() {
           </FormControl>
 
           {/* ================input Box ============================= */}
-          <Box className="flex items-center flex-nowrap gap-3 justify-center ">
+          <Box className="flex items-center flex-nowrap gap-3 justify-center mt-0 ">
             <Box sx={{ position: "relative" }}>
               <TextField
                 required
@@ -226,11 +232,12 @@ export default function Train() {
             <Box>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={["DatePicker", "DatePicker"]}>
-                  <DatePicker
+                  <DatePicker                  
                     label="Departure"
                     // defaultValue={dayjs('2022-04-17')}
                     value={value}
                     onChange={(newValue) => setValue(newValue)}
+                    minDate={dayjs()}
                   />
                 </DemoContainer>
               </LocalizationProvider>
@@ -255,17 +262,17 @@ export default function Train() {
                     control={<Radio />}
                     label="Tommorow"
                   />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     className="bg-gray-100 p-2 rounded-lg"
                     value="dayAfterTommorow"
                     control={<Radio />}
                     label="Day after tommorow"
-                  />
+                  /> */}
                 </RadioGroup>
               </FormControl>
             </Box>
           </Box>
-          <Box className="flex justify-center mt-4 p-10">
+          <Box className="flex text-center justify-center mt-12">
             <button
               onClick={() => navigatetoTrainresults()}
               className="text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full w-60"

@@ -39,6 +39,7 @@ export default function FlightReview() {
 
   return (
     <div className="bg-[#E9EEF7] h-[100vh] border-2 border-pink-500 border-solid">
+      <div></div>
       <div className="flex justify-center ">
         <div className="bg-blue-500 w-full h-72 ">
         <h1 className="text-2xl text-white md:text-3xl font-bold mb-4 pt-3 text-center">Review your booking</h1>

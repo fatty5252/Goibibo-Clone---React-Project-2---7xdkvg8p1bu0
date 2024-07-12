@@ -16,6 +16,7 @@ import BusResults from "../pages/BusResults.js";
 import BusReview from "../pages/BusReview.js";
 import SuccessPayment from "../pages/SuccessPayment.js";
 import TrainReview from "../pages/TrainReview.js";
+import TrainPayment from "../pages/TrainPayment.js";
 
 // import Layout from "./Layout"; // Import the Layout component
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/BusResults/:data" element={<BusResults/>}/>
         <Route path="/BusReview" element={<BusReview/>}/>
         <Route path='/SuccessPayment' element={<SuccessPayment/>}/>
+        <Route path='/TrainPayment' element={<TrainPayment/>}/>
       </Routes>
     
     </BrowserRouter>

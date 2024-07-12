@@ -42,7 +42,7 @@ export default function BusResults() {
     opendest,
     setopendest,
     openSrc,
-    opendesn,
+    opendesn,busCityObjects,
     SingleBusData, SingleBusSearch,busOpenPopup, setBusOpenPopup
   } = useBususer();
 
@@ -73,7 +73,7 @@ export default function BusResults() {
   const options = { weekday: "short" };
   const dayOfWeek = dateObj.toLocaleDateString("en-GB", options);
 
-  const navigateToBusResults = () => {
+  const navigateToBusResuts = () => {
     source &&
       destination &&
       navigate(
@@ -100,8 +100,24 @@ export default function BusResults() {
 
   useEffect(() => {
     BusSearch;
+    BusSearchFilter("+1");
   }, []);
 
+  const BusSearchFilter = async (value) => {
+    try {
+      let url;
+      url = `https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${busSource}","destination":"${busDestination}"}&day=${busDay}&sort={"fare":${Number(value)}}`;
+      const response = await axios.get(url, {
+        headers: {
+          projectId: projectID,
+        },
+      });
+      setBusSearchData(response.data.data.buses);
+      console.log(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // const SingleBusSearch = async (busId) => {
   //   setBusOpenPopup(!busOpenPopup);
   //   try {
@@ -132,95 +148,109 @@ export default function BusResults() {
           gap: "10px",
           justifyContent: "center",
           backgroundColor: "#2274E0",
+          paddingTop: "130px"
         }}
       >
         <Box sx={{ position: "relative", flexGrow: 1, minWidth: "150px" }}>
           <TextField
             required
-            label="From"
+           placeholder="Enter Source"
             onClick={() => openSrc()}
             value={source}
             onChange={(e) => setSource(e.target.value)}
             fullWidth
           />
           {opensource && (
-            <Box
-              className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg z-10 overflow-y-scroll"
-              sx={{
-                width: "100%",
-                maxHeight: "300px",
-                backgroundColor: "white",
-                position: "absolute",
-                top: "50px",
-              }}
-            >
-              {sourcedata &&
-                sourcedata.map((item, index) => (
-                  <div
-                    className="p-2 hover:bg-blue-gray-50"
-                    key={index}
-                    onClick={() => {
-                      setSource(item.iata_code);
-                      setopensource(false);
-                    }}
-                  >
-                    <div className="float-right"></div>
-                    <div className="flex p-1">
-                      <div className="flex flex-row">
-                        <p className="p-1 font-bold">{item.city},</p>
-                        <p className="p-1 font-bold">{item.country}</p>
+                <Box
+                  className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg z-10 overflow-y-scroll"
+                  sx={{
+                    width: "300px",
+                    height: "300px",
+                    backgroundColor: "white",
+                    position: "absolute",
+                    top: "55px",
+                    left: "0px",
+                  }}
+                >
+                  {busCityObjects &&
+                    busCityObjects.map((item, index) => (
+                      <div
+                      className="p-2  hover:bg-blue-gray-50"
+                      key={index}
+                      onClick={() => {
+                        setSource(item.cityWithState), setopensource(false);
+                      }}
+                    >
+                      <div className="float-right">
+                        <span className="capitalize">
+                          {item.country.slice(0, 2)}
+                          <img className="size-5" src="flag.png" alt="flag" />
+                        </span>
+                      </div>
+                      <div className="flex p-1">
+                        <div className="flex flex-row">
+                          <span className="p-1 font-bold">
+                            {item.station}
+                          </span>
+                          <span className="p-1 font-bold">{item.cityWithState},</span>
+                          <span className="p-1 font-bold">
+                            {item.country}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-            </Box>
-          )}
+                    ))}
+                </Box>
+              )}
         </Box>
-        <Box sx={{ position: "relative", flexGrow: 1, minWidth: "150px" }}>
+        <Box sx={{ position: "relative", flexGrow: 1, minWidth: "100px" }}>
           <TextField
             required
-            label="To"
+            placeholder="Enter Destination"
             onClick={() => opendesn()}
             value={destination}
             onChange={(e) => setdestination(e.target.value)}
             fullWidth
           />
           {opendest && (
-            <Box
-              className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll z-10"
-              sx={{
-                width: "100%",
-                maxHeight: "300px",
-                backgroundColor: "white",
-                position: "absolute",
-                top: "50px",
-              }}
-            >
-              {destdata &&
-                destdata.map((item, index) => (
-                  <div
-                    className="p-2 hover:bg-blue-gray-50"
-                    key={index}
-                    onClick={() => {
-                      setdestination(item.iata_code);
-                      setopendest(false);
-                    }}
-                  >
-                    <div className="float-right">
-                      <span>
-                        <img className="size-5" src="flag.png" alt="flag" />
-                      </span>
-                    </div>
-                    <div className="flex p-1">
-                      <div className="flex flex-row">
-                        <p className="p-1 font-bold">{item.city},</p>
-                        <p className="p-1 font-bold">{item.country}</p>
+                <Box
+                  className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll z-10"
+                  sx={{
+                    width: "300px",
+                    height: "300px",
+                    backgroundColor: "white",
+                    position: "absolute",
+                    top: "55px",
+                    left: "0px",
+                  }}
+                >
+                  {busCityObjects &&
+                    busCityObjects.map((item, index) => (
+                      <div
+                        className="p-2 hover:bg-blue-gray-50"
+                        key={index}
+                        onClick={() => {
+                          setdestination(item.cityWithState), setopendest(false);
+                        }}
+                      >
+                        <div className="float-right">
+                          <span>{item.country.slice(0, 2)}</span>
+                          <span>
+                            <img className="size-5" src="flag.png" alt="flag" />
+                          </span>
+                        </div>
+                        <div className="flex p-1">
+                          <div className="flex flex-row">
+                            <p className="p-1 font-bold">{item.cityWithState},</p>
+                            <p className="p-1 font-bold">{item.country}</p>
+                            {/* <p className='p-1'>[{item.iata_code}]</p> */}
+                          </div>
+                        </div>
+                        {/* <p className='ml-8 text-sm'>{item.name}</p> */}
                       </div>
-                    </div>
-                  </div>
-                ))}
-            </Box>
-          )}
+                    ))}
+                </Box>
+              )}
         </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
@@ -246,7 +276,7 @@ export default function BusResults() {
             flexGrow: 1,
             minWidth: "150px",
           }}
-          onClick={navigateToBusResults}
+          onClick={() => navigateToBusResuts()}
         >
           Update search
         </Button>
@@ -254,21 +284,42 @@ export default function BusResults() {
 
       <Grid container spacing={2}>
         <Grid xs={12} md={3}>
-          <Paper elevation={3} sx={{ padding: "20px", margin: "10px" }}>
+          <Paper elevation={3} sx={{ padding: "20px", margin: "10px", marginTop: "30px" }}>
             <Typography variant="h6" fontWeight={700}>
-              Filters
+              Filter
             </Typography>
-            <Typography variant="body1">
+            <Typography  variant="body1">
               <Checkbox checked={checked} onChange={handleChange} />
-              Hide multi check-in flights
+              Hide multi check-in Buses
             </Typography>
+            
             <Box>
-              <Typography variant="body1" fontWeight={700}>
-                Departure time
+              <Typography  variant="body1" fontWeight={700}>
+                Sprt By Price
               </Typography>
-              <Slider defaultValue={30} />
+              <Button onClick={()=>BusSearchFilter("-1")}>High to low</Button>
+              <Button onClick={()=>BusSearchFilter("1")}>low to high</Button>
+              {/* <Slider onClick={()=>BusSearch(e.target.value)} defaultValue={30} /> */}
+            </Box>
+            <Box className="border-b-slate-900 border-[2px] border-solid border-red-700 p-3">
+              <Typography>
+                Departure Time
+              </Typography>
+              <Button sx={{background:"light-blue", border:"2px solid black"}}>12 midnight - 6 AM</Button>
+              <Button  className="bg-gray-400">6 AM - 12 noon</Button>
+              <Button  className="bg-gray-400">12 noon - 6 PM</Button>
+              <Button  className="bg-gray-400">6 PM - 12 midnight</Button>
             </Box>
             <Box>
+              <Typography>
+                Arrival Time
+              </Typography>
+              <Button className="bg-gray-400">12 midnight - 6 AM</Button>
+              <Button className="bg-gray-400">6 AM - 12 noon</Button>
+              <Button className="bg-gray-400">12 noon - 6 PM</Button>
+              <Button className="bg-gray-400">6 PM - 12 midnight</Button>
+            </Box>
+            {/* <Box>
               <Typography variant="body1" fontWeight={700}>
                 Stops
               </Typography>
@@ -279,7 +330,7 @@ export default function BusResults() {
                 Airlines
               </Typography>
               <Slider defaultValue={30} />
-            </Box>
+            </Box> */}
           </Paper>
         </Grid>
         <Grid item xs={12} md={9}>

@@ -23,6 +23,8 @@ import FormLabel from '@mui/material/FormLabel';
 import { projectID } from '../components/Constrains';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -55,12 +57,14 @@ export default function Home() {
 
 
   const navigatetoflightresults = () => {
-   source && destination && navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
+   source && destination ? navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
+   : toast.error('Please select source and destination')
   }
 
 
   return (
     <div className='home-main pt-20'>
+            <ToastContainer position="top-right" />
       <div className='home-background'>
         <Typography variant='h5' sx={{ textAlign: "center", p: "12px", color: "white", fontWeight: '700' }}>Domestic and International Flights</Typography>
         <div className='home-main-section'>
@@ -150,6 +154,7 @@ export default function Home() {
                     // defaultValue={dayjs('2022-04-17')}
                     value={value}
                     onChange={(newValue) => setValue(newValue)}
+                    minDate={dayjs()} // Disable previous dates
                   />
                   <DatePicker
                     label="Return"

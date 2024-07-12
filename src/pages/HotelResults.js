@@ -30,7 +30,7 @@ export default function HotelResults() {
   let city = searchParams.get("city");
   let from = searchParams.get("from");
   let to = searchParams.get("to");
-  console.log(city);
+  // console.log(city);
 
   const navigate = useNavigate();
   const {
@@ -41,7 +41,30 @@ export default function HotelResults() {
     setOpenLocation,
     hotelserach,
     sethotelLocationResults,
+    hotelLocationResults,
   } = useUser();
+
+  const HotelSearch = useMemo(async () => {
+    try {
+      const response = await axios.get(`${serachHOtelURL}?search={"location":"${hotelserach}"}`, 
+        {
+        headers: {
+          projectId: projectID,
+        },
+      });
+        sethotelLocationResults(response.data.data.hotels)
+    } catch (err) {
+      console.log(err);
+    }
+  },[hotelserach, openLocation])
+
+  useEffect(() => {
+    sethotelsearch(city);
+    HotelSearch; 
+  }, [city]);
+
+  
+
 
   // const [hotelLocation, setHotelLocation] = useState(city);
   // const [hotelserach, setHotelSearchResults] = useState([])
@@ -86,7 +109,7 @@ export default function HotelResults() {
 
   return (
     <div>
-      <div>
+      <div className="pt-20">
         <Box
           sx={{
             display: "flex",
@@ -106,7 +129,7 @@ export default function HotelResults() {
               fullWidth
               type="text"
               position="relative"
-              label="eg. - Area Landmark and Property Name"
+              placeholder="eg. - Area Landmark and Property Name"
               value={hotelserach}
               onChange={(e) => sethotelsearch(e.target.value)}
               onClick={() => setOpenLocation(!openLocation)}
@@ -124,17 +147,17 @@ export default function HotelResults() {
                   left: "50px",
                 }}
               >
-                {hotelData &&
-                  hotelData.map((item, index) => (
+                {
+                  Array.from(hotelData).map((item, index) => (
                     <div
                       className="p-2 hover:bg-blue-gray-50"
                       key={index}
                       onClick={() => {
-                        sethotelsearch(item.location), setOpenLocation(false);
+                        sethotelsearch(item), setOpenLocation(false);
                       }}
                     >
                       <div className="float-right">
-                        <span>{item.location}</span>
+                        <span>{item}</span>
                       </div>
                     </div>
                   ))}
@@ -151,9 +174,12 @@ export default function HotelResults() {
                   // defaultValue={dayjs('2022-04-17')}
                   value={value}
                   onChange={(newValue) => setValue(newValue)}
+                  minDate={dayjs()} // Disable previous dates
+
                 />
                 <DatePicker
                   label="Return"
+                  disable="true"
                   // value={value}
                   // onChange={(newValue) => setValue(newValue)}
                 />
@@ -305,8 +331,8 @@ export default function HotelResults() {
 
           <Grid item xs={9}>
             <Box sx={{ border: "2px solid pink" }}>
-              {hotelData?.length > 0 &&
-                hotelData?.map((item, index) => (
+              {hotelLocationResults?.length > 0 &&
+                hotelLocationResults?.map((item, index) => (
                   <Paper
                     key={index}
                     elevation={5}

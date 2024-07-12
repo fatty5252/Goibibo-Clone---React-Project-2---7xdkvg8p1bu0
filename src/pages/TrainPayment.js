@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function BusReview() {
+export default function TrainPayment() {
 
     const navigate = useNavigate();
     const { paymentData } = useBususer();
@@ -77,9 +77,9 @@ export default function BusReview() {
             <ToastContainer position="top-right" />
             <div className='flex justify-center items-center flex-col p-8 md:p-16 lg:p-32'>
                 <div className='flex flex-col items-start p-6 md:p-9 shadow-2xl rounded-2xl w-full max-w-xl'>
-                    <h3 className='review-head p-2 font-bold text-lg md:text-xl lg:text-2xl flex items-start text-blue-400'>
+                    {/* <h3 className='review-head p-2 font-bold text-lg md:text-xl lg:text-2xl flex items-start text-blue-400'>
                         Payment Details: {paymentData?.fare}
-                    </h3>
+                    </h3> */}
 
                     {/* UPI DETAILS */}
                     <div className='main-upi-ctn p-2'>

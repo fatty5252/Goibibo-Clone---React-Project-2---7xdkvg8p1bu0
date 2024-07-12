@@ -25,7 +25,7 @@ import DropDown from "../components/DropDown";
 import { faWeight } from "@fortawesome/free-solid-svg-icons";
 
 export default function TrainResult() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const {
     trainOpenSrc,
@@ -64,7 +64,7 @@ const navigate = useNavigate();
   console.log(trainSource, trainDestination, trainDay);
   console.log(trainSrc, trainDest, trainDay);
 
-  const TrainSearch = useMemo(async () => {
+ useMemo(async () => {
     try {
       let url;
       url = `https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${trainDay}&search={"source":"${trainSource}","destination":"${trainDestination}"}`;
@@ -79,11 +79,14 @@ const navigate = useNavigate();
       console.log(err);
     }
   }, [trainDay, trainSource, trainDestination]);
-  
-  console.log(trainSearch);
-  // useEffect(() => {
-  //   TrainSearch;
-  // }, [TrainSearch]);
+   
+  useEffect(()=>{
+    TrainFilter("+1");
+  },[])
+  const TrainFilter=async(value)=>{
+    let url;
+    url = `https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${trainDay}&search={"source":"${trainSource}","destination":"${trainDestination}"}&sort={"fare":${Number(value)}}`
+  }
 
   const navigatetoTrainresults = () => {
     trainSrc &&
@@ -92,11 +95,15 @@ const navigate = useNavigate();
         `/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`
       );
   };
-  const navigateToTrainReview=(id)=>{   
+  const navigateToTrainReview = (id) => {
+    localStorage.getItem("token") ? 
     navigate(
       `/TrainReview/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}&id=${id}`
-    );
+    ) :
+    alert("Please Login to Continue");
+
   }
+  
 
   return (
     <>
@@ -235,11 +242,12 @@ const navigate = useNavigate();
                   // defaultValue={dayjs('2022-04-17')}
                   value={value}
                   onChange={(newValue) => setValue(newValue)}
+                  minDate={dayjs()} // Disable previous dates
                 />
               </DemoContainer>
             </LocalizationProvider>
           </Box>
-          <Box className="flex justify-center mt-4 p-5 items-end">
+          <Box className="flex justify-center p-5 items-end">
             <button
               onClick={() => navigatetoTrainresults()}
               className="text-black bg-white hover:cursor-pointer p-4 text-xl font-extrabold rounded-xl w-60"
@@ -252,8 +260,34 @@ const navigate = useNavigate();
         <Grid container spacing={2} component="center" mt={3}>
           <Grid xs={12} md={3}>
             <Paper elevation={3} sx={{ padding: "20px" }}>
-              <Typography variant="h6">Filter By</Typography>
-              <Box sx={{ marginTop: "20px" }}></Box>
+            <Box>
+                <Typography variant="body1" padding="20px" fontWeight={700}>
+                  Filter By Price
+                </Typography>
+                <Typography display="flex" gap="20px" flexWrap="wrap">
+                  <Button onClick={()=>{TrainFilter("-1")}}
+                    style={{
+                      color: "white",
+                      background: "blue",
+                      padding: "0.5rem",
+                      width: "8rem",
+                    }}
+                  >
+                    High To Low
+                  </Button>
+                  <Button onClick={()=>{TrainFilter("1")}}
+                    style={{
+                      color: "white",
+                      background: "blue",
+                      padding: "0.5rem",
+                      width: "8rem",
+                    }}
+                  >
+                    Low To High
+                  </Button>
+                  
+                </Typography>
+              </Box>
             </Paper>
           </Grid>
           <Grid xs={12} md={9}>
@@ -271,7 +305,7 @@ const navigate = useNavigate();
                 alignItems="center"
               >
                 <Typography variant="h6" color="#647A97">
-                  We have found 18 trains on or near this route
+                  We have found {trainSearch.length} trains on or near this route
                 </Typography>
                 <Typography
                   display="flex"
@@ -296,60 +330,62 @@ const navigate = useNavigate();
                     borderRadius: "5px",
                   }}
                 >
-                 
+
                   <Box className="flex row py-3 items-center justify-between">
                     <Box className="flex row gap-3 ">
-                      <Typography sx={{fontWeight:"600", fontSize:"25px"}} variant="h6">{item.trainNumber}</Typography>
-                      <Typography sx={{fontWeight:"600", fontSize:"25px"}} variant="h6">{item.trainName}</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "20px" }} variant="h6">{item.trainNumber}</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "20px" }} variant="h6">{item.trainName}</Typography>
                     </Box>
                     <Box className="flex py-1 row gap-3 ">
                       <Button className="p-3">VIEW ROUTE</Button>
-                      <Box className="p-2 text-xl">Runs in: <span className="m-2 p-2">{item.daysOfOperation}</span></Box>
+                      <Box className="p-1 text-lg ">Runs in: {item.daysOfOperation.map((days, index) => (
+                        <span key={index} className="p-1 text-gray-400">{days}</span>
+                      ))} </Box>
                     </Box>
                   </Box>
                   <Box className="flex justify-between pb-10 gap-8 items-center">
-                    <Box className="flex justify-between ">
-                      <Typography sx={{fontWeight:"600", fontSize:"20px"}} variant="body1">
-                      {item.arrivalTime}
+                    <Box className="flex justify-between gap-8 ">
+                      <Typography sx={{ fontWeight: "400", fontSize: "18px" }} variant="body1">
+                        {item.arrivalTime}
                       </Typography>
-                      <Typography sx={{fontWeight:"600", fontSize:"20px"}} variant="body1">{item.source}</Typography>
-                    </Box>                 
+                      <Typography sx={{ fontWeight: "400", fontSize: "18px" }} variant="body1">{item.source}</Typography>
+                    </Box>
                     <Box>
                       <span>*----------------------{item.travelDuration}</span>
                       <span> ----------------------------*</span>
                     </Box>
                     <Box className="flex justify-between gap-8 ">
-                      <Typography sx={{fontWeight:"600", fontSize:"20px"}} variant="body1">
+                      <Typography sx={{ fontWeight: "400", fontSize: "18px" }} variant="body1">
                         {item.departureTime}
                       </Typography>
-                      <Typography sx={{fontWeight:"600", fontSize:"20px"}} variant="body1">
+                      <Typography sx={{ fontWeight: "400", fontSize: "18px" }} variant="body1">
                         {item.destination}
                       </Typography>
                     </Box>
                   </Box>
                   {/* <Typography variant="body1">{item.fare}</Typography> */}
-                 
+
                   <Box className="flex flexDirectionRow gap-5  flex-wrap">
-    {item.coaches.map((items, index) => (
-      <Box
-        key={index}
-        onClick={() => navigateToTrainReview(items.id)}
-        className="flex gap-5 cursor-pointer"
-      >
-        <Box className="flex flex-col justify-between items-start">
-          <Box className="flex justify-center gap-48 bg-[#F4FAF4] p-1">
-            <Typography>{items.coachType}</Typography>
-            <Typography>3085</Typography>
-          </Box>
-          <Box className="flex justify-between gap-28 w-64 p-2 bg-[#E9F6EA]">
-            <Typography>AVL {items.numberOfSeats}</Typography>
-            <Typography>1hr ago</Typography>
-          </Box>
-        </Box>
-      </Box>
-    ))}
-  </Box>                
-                 
+                    {item.coaches.map((items, index) => (
+                      <Box
+                        key={index}
+                        onClick={() => navigateToTrainReview(items.id)}
+                        className="flex gap-5 cursor-pointer"
+                      >
+                        <Box className="flex flex-col justify-between items-start">
+                          <Box className="flex justify-center gap-48 bg-[#F4FAF4] p-1">
+                            <Typography>{items.coachType}</Typography>
+                            <Typography >{item.fare}</Typography>
+                          </Box>
+                          <Box className="flex justify-between gap-28 w-64 p-2 bg-[#E9F6EA]">
+                            <Typography>AVL {items.numberOfSeats}</Typography>
+                            <Typography>1hr ago</Typography>
+                          </Box>
+                        </Box>
+                      </Box>
+                    ))}
+                  </Box>
+
                 </Paper>
               ))}
             </Grid>

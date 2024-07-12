@@ -59,21 +59,23 @@ export default function Bus() {
           </h1>
           <Paper className="relative ml-[15rem] w-[60%] h-96 p-11 mt-11 rounded-sm shadow-slate-300">
             <div className="text-xl text-gray-700 font-bold py-2">FROM</div>
-            <Box sx={{ position: "relative" }}>
+            <Box sx={{ position: "relative", flexGrow: 1, minWidth: "150px" }}>
               <TextField
-                fullWidth
-                InputProps={{
-                  sx: { fontSize: "20px" }, // Increase font size of input text
-                }}
-                InputLabelProps={{
-                  sx: { fontSize: "18px" }, // Increase font size of label text
-                }}
+               required
+                fullWidth               
                 id="standard-basic"
                 placeholder="Enter Source"
                 variant="standard"
                 onClick={() => openSrc()}
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
+                InputProps={{
+                  sx: { fontSize: "20px" }, // Increase font size of input text
+                }}
+                InputLabelProps={{
+                  sx: { fontSize: "18px" }, // Increase font size of label text
+                }}
+                
               />
               {opensource && (
                 <Box
