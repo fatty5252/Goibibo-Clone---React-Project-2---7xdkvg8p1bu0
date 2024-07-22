@@ -44,6 +44,15 @@ export default function HotelResults() {
     hotelLocationResults,
   } = useUser();
 
+  const navigateToHotelRooms = (id) => {
+    localStorage.getItem("token") ? 
+    navigate(
+      `/HotelRooms/data?search=${hotelserach}&id=${id}`
+    ) :
+    alert("Please Login to Continue");
+
+  }
+
   const HotelSearch = useMemo(async () => {
     try {
       const response = await axios.get(`${serachHOtelURL}?search={"location":"${hotelserach}"}`, 
@@ -57,7 +66,7 @@ export default function HotelResults() {
       console.log(err);
     }
   },[hotelserach, openLocation])
-
+  console.log("hotel Location data====>", hotelLocationResults);
   useEffect(() => {
     sethotelsearch(city);
     HotelSearch; 
@@ -118,15 +127,13 @@ export default function HotelResults() {
             padding: "30px",
             gap: "10px",
             justifyContent: "center",
-            backgroundColor: "#2274E0",
+            backgroundColor: "#FE6E37",
           }}
-        >
-          <Paper className="w-full h-72 p-5 ">
-            <Typography>Where</Typography>
-
+        >     
+          <Box className="flex items-center flex-col ">    
+             <Typography className="text-white">AREA, LANDMARK OR PROPERTY NAME</Typography>
             <TextField
-              sx={{ mt: 2 }}
-              fullWidth
+              sx={{ mt: 2, width: "400px" }}             
               type="text"
               position="relative"
               placeholder="eg. - Area Landmark and Property Name"
@@ -134,6 +141,7 @@ export default function HotelResults() {
               onChange={(e) => sethotelsearch(e.target.value)}
               onClick={() => setOpenLocation(!openLocation)}
             />
+            </Box>
             {openLocation && (
               <Box
                 className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg"
@@ -163,30 +171,32 @@ export default function HotelResults() {
                   ))}
               </Box>
             )}
-
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer
                 sx={{ mt: 2 }}
                 components={["DatePicker", "DatePicker"]}
               >
+                 <Box className="flex items-center flex-col ">  
+             <Typography className="text-white">CHECKIN</Typography>
                 <DatePicker
-                  label="Departure"
                   // defaultValue={dayjs('2022-04-17')}
                   value={value}
                   onChange={(newValue) => setValue(newValue)}
                   minDate={dayjs()} // Disable previous dates
 
                 />
+                </Box>
+                <Box className="flex items-center flex-col "> 
+             <Typography className="text-white">CHECKOUT</Typography>
                 <DatePicker
-                  label="Return"
                   disable="true"
                   // value={value}
                   // onChange={(newValue) => setValue(newValue)}
                 />
+                </Box>
               </DemoContainer>
             </LocalizationProvider>
             <Button onClick={handleSearchHotel}>Search</Button>
-          </Paper>
         </Box>
 
         <Grid container spacing={2}>
@@ -330,10 +340,10 @@ export default function HotelResults() {
           {/* ====================================Main Content============================== */}
 
           <Grid item xs={9}>
-            <Box sx={{ border: "2px solid pink" }}>
+            <Box  sx={{ border: "2px solid pink" }}>
               {hotelLocationResults?.length > 0 &&
                 hotelLocationResults?.map((item, index) => (
-                  <Paper
+                  <Paper onClick={()=>navigateToHotelRooms(item._id)}
                     key={index}
                     elevation={5}
                     sx={{

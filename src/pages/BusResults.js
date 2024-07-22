@@ -81,7 +81,7 @@ export default function BusResults() {
       );
   };
 
-  const BusSearch = useMemo(async () => {
+  useMemo(async () => {
     try {
       let url;
       url = `https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${busSource}","destination":"${busDestination}"}&day=${busDay}`;
@@ -99,14 +99,14 @@ export default function BusResults() {
   console.log(SingleBusData);
 
   useEffect(() => {
-    BusSearch;
-    BusSearchFilter("+1");
-  }, []);
+    setSource(busSource)
+    setdestination(busDestination)
+  }, [busSource, busDestination]);
 
   const BusSearchFilter = async (value) => {
     try {
       let url;
-      url = `https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${busSource}","destination":"${busDestination}"}&day=${busDay}&sort={"fare":${Number(value)}}`;
+      url = `https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${busSource}","destination":"${busDestination}"}&day=${busDay}&sort={"fare":${value}}`;
       const response = await axios.get(url, {
         headers: {
           projectId: projectID,
@@ -297,8 +297,8 @@ export default function BusResults() {
               <Typography  variant="body1" fontWeight={700}>
                 Sprt By Price
               </Typography>
-              <Button onClick={()=>BusSearchFilter("-1")}>High to low</Button>
-              <Button onClick={()=>BusSearchFilter("1")}>low to high</Button>
+              <Button onClick={()=>BusSearchFilter(-1)}>High to low</Button>
+              <Button onClick={()=>BusSearchFilter(1)}>low to high</Button>
               {/* <Slider onClick={()=>BusSearch(e.target.value)} defaultValue={30} /> */}
             </Box>
             <Box className="border-b-slate-900 border-[2px] border-solid border-red-700 p-3">

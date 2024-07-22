@@ -109,7 +109,9 @@ export default function FlightResults() {
   
   useEffect(()=>{
     FlightFilter("+1")
-  },[])
+    setSource(flightsource)
+    setdestination(flightdestination)
+  },[flightsource, flightdestination])
 
   const FlightFilter=async(value)=>{
     try{

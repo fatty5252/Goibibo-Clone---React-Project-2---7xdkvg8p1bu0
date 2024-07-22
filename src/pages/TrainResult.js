@@ -46,6 +46,7 @@ export default function TrainResult() {
   } = useTrainUser();
 
   const [value, setValue] = React.useState(dayjs(new Date()));
+  const [trainClass, setTrainClass] = useState(false);
 
   // const day = value && value.$d.split(" ").slice(0,4)
   // console.log(day)
@@ -61,8 +62,8 @@ export default function TrainResult() {
   const trainSource = searchParams.get("source");
   const trainDestination = searchParams.get("destination");
   const trainDay = searchParams.get("day");
-  console.log(trainSource, trainDestination, trainDay);
-  console.log(trainSrc, trainDest, trainDay);
+  // console.log(trainSource, trainDestination, trainDay);
+  // console.log(trainSrc, trainDest, trainDay);
 
  useMemo(async () => {
     try {
@@ -82,12 +83,21 @@ export default function TrainResult() {
    
   useEffect(()=>{
     TrainFilter("+1");
-  },[])
+    setTrainSrc(trainSource)
+    setTrainDest(trainDestination)   
+  },[trainSource, trainDestination])
+
   const TrainFilter=async(value)=>{
     let url;
     url = `https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${trainDay}&search={"source":"${trainSource}","destination":"${trainDestination}"}&sort={"fare":${Number(value)}}`
+    const response = await axios.get(url, {
+      headers: {
+        projectId: projectID,
+      },
+    });
+    setTrainSearch(response?.data?.data?.trains);
   }
-
+ 
   const navigatetoTrainresults = () => {
     trainSrc &&
       trainDest &&
@@ -103,8 +113,37 @@ export default function TrainResult() {
     alert("Please Login to Continue");
 
   }
-  
 
+  const differentCoachPrice=(item,price)=>{
+    if (item === "2S"){
+      return price-200
+        
+    } else if (item === "EA") {
+      return  price-100
+    }
+    else if (item === "EC") {
+      return price
+    }
+    else if (item === "CC") {
+      return price+100
+    }
+    else if (item === "SL") {
+      return  price+200
+    }
+    else if (item === "3A") {
+      return  price+400
+    }
+    else if (item === "2A") {
+      return price+600
+    }
+    else if (item === "1A") {
+      return price+800
+    }
+    else if (item === "3E") {
+      return  price+200
+    }
+  }
+  
   return (
     <>
       <Box bgcolor="#EFF3F8" >
@@ -365,17 +404,17 @@ export default function TrainResult() {
                   </Box>
                   {/* <Typography variant="body1">{item.fare}</Typography> */}
 
-                  <Box className="flex flexDirectionRow gap-5  flex-wrap">
-                    {item.coaches.map((items, index) => (
+                  <Box sx={{height:`${!trainClass ? "75px" : "auto"}`, overflow:`${!trainClass ? "hidden" : "none"}`}} className="flex flexDirectionRow gap-5 flex-wrap">
+                    {item?.coaches?.map((items, index) => (
                       <Box
                         key={index}
-                        onClick={() => navigateToTrainReview(items.id)}
-                        className="flex gap-5 cursor-pointer"
+                        onClick={() => navigateToTrainReview(item._id)}
+                        className="flex gap-5 cursor-pointer "
                       >
                         <Box className="flex flex-col justify-between items-start">
                           <Box className="flex justify-center gap-48 bg-[#F4FAF4] p-1">
                             <Typography>{items.coachType}</Typography>
-                            <Typography >{item.fare}</Typography>
+                            <Typography >{differentCoachPrice(items.coachType,item.fare)}</Typography>
                           </Box>
                           <Box className="flex justify-between gap-28 w-64 p-2 bg-[#E9F6EA]">
                             <Typography>AVL {items.numberOfSeats}</Typography>
@@ -385,7 +424,9 @@ export default function TrainResult() {
                       </Box>
                     ))}
                   </Box>
-
+                  <Box sx={{textAlign:"start"}}>
+                  {item?.coaches?.length > 3 &&  <Button onClick={()=>setTrainClass(!trainClass)} >View All</Button>}
+                  </Box>
                 </Paper>
               ))}
             </Grid>

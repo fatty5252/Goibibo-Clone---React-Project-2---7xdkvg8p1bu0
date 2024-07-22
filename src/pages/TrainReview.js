@@ -1,12 +1,39 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { projectID } from '../components/Constrains';
 
 export default function TrainReview() {
   const navigate = useNavigate();
   const navigateToTrainPayment = () => {
     navigate("/TrainPayment");
   }
+  const [singleTrainData, setSingleTrainData] = useState("");
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const _id = searchParams.get("id");
+  console.log(_id);
+
+  const SingleTrainGet = async () => {
+    try {
+     const resopnse = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/train/${_id}`, {
+      headers: {
+        projectId: projectID,
+      },
+     });
+     setSingleTrainData(resopnse.data);
+     console.log(resopnse);
+  }
+  catch(err){
+    console.log(err);
+  }
+  }
+  useEffect(()=>{
+    SingleTrainGet();
+  },[_id])
+
+
   return (
     <>
       <Box className='bg-[#FF6D38] pt-24 pl-24 h-60'>

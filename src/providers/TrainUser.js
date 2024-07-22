@@ -13,6 +13,7 @@ export const TrainUser = ({children})=>{
     const [trainOpenSrcData, setTrainOpenSrcData] = useState();
     const [trainSrc, setTrainSrc] = useState("");
     const [trainDest, setTrainDest] = useState("");  
+    const [payment, setPayment] = useState(0);
 
     const trainCityObjects = [
       { station: "Delhi Junction", city: "Delhi", country: "India" },

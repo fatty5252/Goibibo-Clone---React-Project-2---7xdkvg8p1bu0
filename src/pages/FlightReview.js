@@ -38,7 +38,7 @@ export default function FlightReview() {
   },[]);
 
   return (
-    <div className="bg-[#E9EEF7] h-[100vh] border-2 border-pink-500 border-solid">
+    <div className="bg-[#E9EEF7] h-[100vh] ">
       <div></div>
       <div className="flex justify-center ">
         <div className="bg-blue-500 w-full h-72 ">
