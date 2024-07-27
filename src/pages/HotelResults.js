@@ -77,7 +77,7 @@ export default function HotelResults() {
 
   // const [hotelLocation, setHotelLocation] = useState(city);
   // const [hotelserach, setHotelSearchResults] = useState([])
-  const [value, setValue] = React.useState(dayjs(new Date()));
+  const [value, setValue] = React.useState(dayjs(new Date()).format('YYYY-MM-DD'));
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {
@@ -119,85 +119,89 @@ export default function HotelResults() {
   return (
     <div>
       <div className="pt-20">
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            flexWrap: "nowrap",
-            padding: "30px",
-            gap: "10px",
-            justifyContent: "center",
-            backgroundColor: "#FE6E37",
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'nowrap',
+          padding: '30px',
+          gap: '10px',
+          justifyContent: 'center',
+          backgroundColor: '#FE6E37',
+        }}
+      >
+        <div className='flex items-center flex-col'>
+          <span className='text-white font-bold text-xl'>
+            AREA, LANDMARK OR PROPERTY NAME
+          </span>
+          <input className='p-5 border text-xl font-bold outline-none rounded-3xl'
+            style={{ marginTop: '20px', width: '400px' }}
+            type='text'
+            placeholder='eg. - Area Landmark and Property Name'
+            value={hotelserach}
+            onChange={(e) => sethotelsearch(e.target.value)}
+            onClick={() => setOpenLocation(!openLocation)}
+          />
+        </div>
+        {openLocation && (
+          <div className='overflow-y-scroll'
+            style={{
+              width: '400px',
+              height: '400px',
+              backgroundColor: 'white',
+              position: 'absolute',
+              top: '220px',
+              zIndex: '1',
+              left: '240px',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+              borderRadius: '5px',
+            }}
+          >
+            {Array.from(hotelData).map((item, index) => (
+             <div className='p-5 hover:bg-blue-gray-50 font-rubik text-xl' key={index} onClick={() => { sethotelsearch(item), setOpenLocation(false) }}>
+             <div className='float-right'>
+                 <span>{item}</span>
+             </div>
+             </div>
+            ))}
+          </div>
+        )}
+        <div className='flex items-center flex-col'>
+          <span className='text-white font-bold text-xl'>CHECKIN</span>
+          <input  className='p-5 border text-xl font-bold outline-none rounded-3xl'
+            type='date'
+            style={{ marginTop: '20px' }}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            min={new Date()}
+          />
+        </div>
+        <div className='flex items-center flex-col'>
+          <span className='text-white font-bold text-xl'>CHECKOUT</span>
+          <input className='p-5 border text-xl font-bold outline-none rounded-3xl'
+            type='date'
+            style={{ marginTop: '20px' }}
+            disabled
+            value={value}
+          />
+        </div>
+        <button
+          onClick={handleSearchHotel}
+          style={{
+            marginTop: '40px',
+            padding: '20px 30px',
+            backgroundColor: 'white',
+            color: '#2877D6',
+            borderRadius: '20px',
+            cursor: 'pointer',
+            fontWeight: "800",
+            fontSize: "20px"
+            
           }}
-        >     
-          <Box className="flex items-center flex-col ">    
-             <Typography className="text-white">AREA, LANDMARK OR PROPERTY NAME</Typography>
-            <TextField
-              sx={{ mt: 2, width: "400px" }}             
-              type="text"
-              position="relative"
-              placeholder="eg. - Area Landmark and Property Name"
-              value={hotelserach}
-              onChange={(e) => sethotelsearch(e.target.value)}
-              onClick={() => setOpenLocation(!openLocation)}
-            />
-            </Box>
-            {openLocation && (
-              <Box
-                className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg"
-                sx={{
-                  width: "300px",
-                  height: "auto",
-                  backgroundColor: "white",
-                  position: "absolute",
-                  top: "150px",
-                  zIndex: "1",
-                  left: "50px",
-                }}
-              >
-                {
-                  Array.from(hotelData).map((item, index) => (
-                    <div
-                      className="p-2 hover:bg-blue-gray-50"
-                      key={index}
-                      onClick={() => {
-                        sethotelsearch(item), setOpenLocation(false);
-                      }}
-                    >
-                      <div className="float-right">
-                        <span>{item}</span>
-                      </div>
-                    </div>
-                  ))}
-              </Box>
-            )}
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer
-                sx={{ mt: 2 }}
-                components={["DatePicker", "DatePicker"]}
-              >
-                 <Box className="flex items-center flex-col ">  
-             <Typography className="text-white">CHECKIN</Typography>
-                <DatePicker
-                  // defaultValue={dayjs('2022-04-17')}
-                  value={value}
-                  onChange={(newValue) => setValue(newValue)}
-                  minDate={dayjs()} // Disable previous dates
-
-                />
-                </Box>
-                <Box className="flex items-center flex-col "> 
-             <Typography className="text-white">CHECKOUT</Typography>
-                <DatePicker
-                  disable="true"
-                  // value={value}
-                  // onChange={(newValue) => setValue(newValue)}
-                />
-                </Box>
-              </DemoContainer>
-            </LocalizationProvider>
-            <Button onClick={handleSearchHotel}>Search</Button>
-        </Box>
+        >
+          Update Search
+        </button>
+      </div>
 
         <Grid container spacing={2}>
           {/* =======================================Left Sidebar=============================== */}

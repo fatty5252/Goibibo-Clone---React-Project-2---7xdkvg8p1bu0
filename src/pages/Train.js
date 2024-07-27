@@ -67,7 +67,7 @@ export default function Train() {
  
 
   return (
-    <div className="Train-main bg-blue-100">
+    <div className="Train-main bg-blue-100 h-[150vh]">
       <ToastContainer position="top-right"/>
       <div className="train-bg bg-blue-100">
         <div className="relative top-10 h-auto border-spacing-5 flex justify-between ml-40 mt-20 w-3/4 text-white font-bold font-sans">
@@ -282,8 +282,8 @@ export default function Train() {
           </Box>
         </Paper>
       </div>
-      <Box sx={{ marginTop: "30rem", background: "#EFF3F8" }}>
-        <Box className=" border-2 border-solid border-black rounded-xl w-3/4 ml-32">
+      <Box sx={{ marginTop: "30rem", background: "#EFF3F8", pt:"50px", }}>
+        <Box className=" border-2 border-solid border-black rounded-xl w-3/4 ml-52">
           <img src="trainposter1.jpeg" alt="bannerimg" />
         </Box>
         <h1 className="font-bold font-rubik text-4xl text-center mt-6">
@@ -361,11 +361,11 @@ export default function Train() {
           </Paper>
         </Box>
 
-        <Box>
+        {/* <Box>
           <h1 className="font-bold font-rubik text-4xl text-center mt-6">
             Railways inquiry just a click away!
           </h1>
-        </Box>
+        </Box> */}
 
         {/* </Box> */}
       </Box>

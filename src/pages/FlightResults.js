@@ -139,11 +139,11 @@ export default function FlightResults() {
   const navigatetoflightReview = (id) => {
    getToken ? navigate(
       `/FlightReview/data?source=${source}&destination=${destination}&day=${day}&id=${id}`
-    ) : navigate("/login"),toast("Please Login to continue");
+    ) : toast("Please Login to continue");
   };
 
   return (
-    <div>
+    <div className="h-[200vh]">
             <ToastContainer position="top-right" />
       <Box
         sx={{

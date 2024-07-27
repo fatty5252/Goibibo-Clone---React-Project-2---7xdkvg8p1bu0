@@ -1,75 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import '../styles/Home.css'
-import { Box, Paper, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles';
-import PropTypes from 'prop-types';
-import TextField from '@mui/material/TextField';
-import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Travellers from '../components/Travellers'
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { projectID } from '../components/Constrains';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-
-
+import Travellers from '../components/Travellers'
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 export default function Home() {
-
   const navigate = useNavigate();
-
   const { source, setSource, destination, setdestination, sourcedata, setsourceData,
     destdata, setdestData, opensource, setopensource, opendest, setopendest, openSrc, opendesn, FlightSearch } = useUser();
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  
-  const [value, setValue] = React.useState(dayjs(new Date()));
-
-  // const day = value && value.$d.split(" ").slice(0,4)
-  // console.log(day)
-  const day = value.$d
+  const [value, setValue] = useState(dayjs(new Date()));
+  const day = value.$d;
   const dateObj = new Date(day);
-  const options = { weekday: 'short' }; // Options to display short weekday
-  const dayOfWeek = dateObj.toLocaleDateString('en-GB', options); // Using 'en-GB' locale for the day of the week
-  console.log(dayOfWeek)
-
-
-  // const [flightFrom, setflightfrom] = useState('')
-
-
-
+  const options = { weekday: 'short' };
+  const dayOfWeek = dateObj.toLocaleDateString('en-GB', options);
+  console.log(dayOfWeek);
   const navigatetoflightresults = () => {
-   source && destination ? navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
-   : toast.error('Please select source and destination')
+    source && destination ? navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
+      : toast.error('Please select source and destination');
   }
-
-
   return (
-    <div className='home-main pt-20'>
-            <ToastContainer position="top-right" />
+    <div className='home-main pt-20 h-screen'>
+      <ToastContainer position="top-right" />
       <div className='home-background'>
-        <Typography variant='h5' sx={{ textAlign: "center", p: "12px", color: "white", fontWeight: '700' }}>Domestic and International Flights</Typography>
+        <h5 className='home-heading text-2xl' style={{ textAlign: "center", padding: "12px", color: "white", fontWeight: '700' }}>
+          Domestic and International Flights
+        </h5>
         <div className='home-main-section'>
-          <Paper sx={{ width: '90vw', height: '50vh', backgroundColor: 'white', borderRadius: '20px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}>
-            {/*=========radio buttons top==============  */}
+          <div style={{
+            width: '90vw', height: 'auto', backgroundColor: 'white', borderRadius: '20px',
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)'
+          }}>
+            {/* Radio buttons top */}
             <FormControl sx={{ padding: "40px 20px" }}>
               <RadioGroup
                 row
@@ -81,24 +51,24 @@ export default function Home() {
                 <FormControlLabel value="other" control={<Radio />} label="Multi-city" />
               </RadioGroup>
             </FormControl>
-
-            <Box sx={{ display: "flex", alignItems: 'center', flexWrap: "nowrap", padding: '30px', gap: "10px", justifyContent: "center" }}>
-              <Box sx={{ position: 'relative' }}>
-                <TextField
+            <div style={{
+              display: "flex", alignItems: 'center', flexWrap: "wrap", padding: '30px',
+              gap: "10px", justifyContent: "center"
+            }}>
+              <div style={{ position: 'relative' }} className='border border-black p-3 rounded-lg'>
+                <input className='outline-none'
                   required
-                  id="outlined-required"
-                  label="From"
-
-                  // placeholder='Enter city airport'
-                  // defaultValue="Enter city airport"
+                  placeholder="From"
                   onClick={() => openSrc()}
                   value={source}
                   onChange={(e) => setSource(e.target.value)}
+                  
                 />
                 {opensource &&
-                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll" sx={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                  <div className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll"
+                    style={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
                     {sourcedata && sourcedata.map((item, index) => (
-                      <div className='p-2  hover:bg-blue-gray-50' key={index} onClick={() => { setSource(item.iata_code), setopensource(false) }}>
+                      <div className='p-2  hover:bg-blue-gray-50' key={index} onClick={() => { setSource(item.iata_code); setopensource(false) }}>
                         <div className='float-right'>
                           <span className='capitalize'>{item.country.slice(0, 2)}<img className='size-5' src='flag.png' alt='flag' /></span>
                         </div>
@@ -113,24 +83,21 @@ export default function Home() {
                         <p className='ml-8 text-sm'>{item.name}</p>
                       </div>
                     ))}
-                  </Box>}
-              </Box>
-              <Box sx={{ position: "relative" }}>
-                {/* <CompareArrowsOutlinedIcon sx={{ color: "blue", fontSize: "40px", backgroundColor: 'white', borderRadius: '100%' }} /> */}
-                <TextField sx={{ transform: "initial", transition: "ease-out 3s" }}
+                  </div>}
+              </div>
+              <div style={{ position: "relative" }} className='border border-black p-3 rounded-lg'>
+                <input className='outline-none'
                   required
-                  id="outlined-required"
-                  label="To"
+                  placeholder="To"
                   onClick={() => opendesn()}
                   value={destination}
                   onChange={(e) => setdestination(e.target.value)}
-                // placeholder='Enter city airport'
-                // defaultValue="Enter city airport"
                 />
                 {opendest &&
-                  <Box className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll" sx={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
-                    {destdata && destdata.slice(0,6).map((item, index) => (
-                      <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { setdestination(item.iata_code), setopendest(false) }}>
+                  <div className="shadow-md ring-offset-2 ring-opacity-50 rounded-lg overflow-y-scroll"
+                    style={{ width: "350px", height: "300px", backgroundColor: "white", position: 'absolute', top: '58px', left: '0px' }}>
+                    {destdata && destdata.slice(0, 6).map((item, index) => (
+                      <div className='p-2 hover:bg-blue-gray-50' key={index} onClick={() => { setdestination(item.iata_code); setopendest(false) }}>
                         <div className='float-right'>
                           <span>{item.country.slice(0, 2)}</span>
                           <span><img className='size-5' src='flag.png' alt='flag' /></span>
@@ -146,44 +113,40 @@ export default function Home() {
                         <p className='ml-8 text-sm'>{item.name}</p>
                       </div>
                     ))}
-                  </Box>}
-              </Box>
+                  </div>}
+              </div>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker', 'DatePicker']}>
-                  <DatePicker label="Departure"
-                    // defaultValue={dayjs('2022-04-17')}
-                    value={value}
-                    onChange={(newValue) => setValue(newValue)}
-                    minDate={dayjs()} // Disable previous dates
-                  />
-                  <DatePicker
-                    label="Return"
-                    disabled="true"
-                  // value={value}
-                  // onChange={(newValue) => setValue(newValue)}
-                  />
-                </DemoContainer>
+                <DatePicker
+                  label="Departure"
+                  value={value}
+                  onChange={(newValue) => setValue(newValue)}
+                  minDate={dayjs()}
+                />
+                <DatePicker
+                  label="Return"
+                  disabled
+                />
               </LocalizationProvider>
-              <TextField
+              <input className='border p-3 rounded-lg outline-none'
+              
                 required
-                id="outlined-required"
-                label="Travellers and class"
-                // placeholder='Enter city airport'
+                placeholder="Travellers and class"
                 defaultValue="1 Adult"
                 onClick={handleOpen}
               />
               <Travellers open={open} setOpen={setOpen} />
-            </Box>     
-            <Box className="flex justify-center mt-7 p-10">
-            <button  onClick={() => navigatetoflightresults()} className='text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full w-60'>SEARCH FLIGHTS</button>
-          </Box>
-          </Paper>
+            </div>
+            <div className="flex justify-center mt-7 pb-4">
+              <button onClick={() => navigatetoflightresults()} className='text-white bg-orange-400 hover:bg-orange-500 p-5 text-xl font-extrabold rounded-full w-60'>
+                SEARCH FLIGHTS
+              </button>
+            </div>
+          </div>
         </div>
-        <Box className="flex justify-center mt-24 ">
-          <img className='rounded-lg' src='homeimg.png' alt='bannerHome'/>
-        </Box>
+        <div className="flex justify-center mt-24 ">
+          <img className='rounded-lg' src='homeimg.png' alt='bannerHome' />
+        </div>
       </div>
     </div>
   )
 }
-

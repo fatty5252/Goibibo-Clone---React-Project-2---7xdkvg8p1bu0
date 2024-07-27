@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 // import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import { Box, Grid, Paper } from "@mui/material";
 
 function Footer() {
-    const underworking=()=>{
-        alert("Under The Constraction....")
-    }
-    return (
-        <footer className="bg-orange-500 text-white mt-96 py-7">
-            <div className="w-3/4 mx-auto container ">
-                <div className="flex flex-wrap justify-center">
-                    {/* Connect with Us Section */}
-                    <div className=" w-full lg:w-4/12 px-4 mb-4">
+  const underworking = () => {
+    alert("Under The Constraction....");
+  };
+  return (
+    <footer className="bg-[#DBEAFE] overflow-hidden ">
+      {/* <div className="w-full mx-auto container ">
+                <div className="flex flex-wrap justify-center"> */}
+      {/* Connect with Us Section */}
+      {/* <div className=" w-full lg:w-4/12 px-4 mb-4">
                         <h4 className="text-2xl font-semibold mb-4">CONNECT WITH US</h4>
                         <div className="flex items-center">
                             <input
@@ -38,9 +38,9 @@ function Footer() {
                             </a>
                         </div>
                         <p className="mt-10 text-m">© Copyright 2023 GoIbibo. All rights reserved</p>
-                    </div>
-                    {/* Useful Links Section */}
-                    <div className=" border-x-2 w-full lg:w-4/12 px-4 pl-12 mb-4">
+                    </div> */}
+      {/* Useful Links Section */}
+      {/* <div className=" border-x-2 w-full lg:w-4/12 px-4 pl-12 mb-4">
                         <h4 className="text-xl font-bold mb-4">About Us</h4>
                         <ul className="flex gap-10 text-sm font-bold">
                             <div>
@@ -64,9 +64,9 @@ function Footer() {
                                 <li className='mb-4'><a href="#" className="hover:text-white" onClick={underworking}>Gift Card</a></li>
                             </div>
                         </ul>
-                    </div>
-                    {/* Products Section */}
-                    <div className="w-full pl-12 lg:w-4/12 px-4 mb-4">
+                    </div> */}
+      {/* Products Section */}
+      {/* <div className="w-full pl-12 lg:w-4/12 px-4 mb-4">
                         <h4 className="text-xl font-bold mb-4">PRODUCTS</h4>
                         <ul className="flex gap-10 text-sm font-bold">
                             <div>
@@ -87,10 +87,108 @@ function Footer() {
                                 <li className='mb-4'><a  href="#" className="hover:text-white" onClick={underworking}>Goibibo Advertising Solutions</a></li>
                             </div>
                         </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
+                    </div> */}
+      {/* </div>
+            </div> */}
+      <Grid container mx={25} spacing={2}>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            // justifyContent="center"
+            // height={100}
+            // bgcolor="white"
+            // borderRadius={1}
+            // p={2}
+          >
+            <h1 className="font-bold py-4">OUR PRODUCTS</h1>
+            <p className="justify-start">Domestic Hotels</p>
+            <p className="justify-start">International Hotels</p>
+            <p>Domestic Flights</p>
+            <p>International Flights</p>
+            <p>Multi-City Flights</p>
+            <p>Couple Friendly Hotels</p>
+            <p>Nearby Getaways</p>
+            <p>Bus Booking</p>
+            <p>Cab Booking</p>
+            <p>Train Booking</p>
+            <p>Go Stay</p>
+            <p>Trip Money</p>
+            <p>Goibibo Advertising Solutions</p>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            // justifyContent="center"
+            // height={100}
+            // bgcolor="white"
+            // borderRadius={1}
+            // p={2}
+          >
+            <h1 className="font-bold py-4">ABOUT US </h1>
+            <p>About Us</p>
+            <p>Investor Relations</p>
+            <p>Management</p>
+            <p>Terms of Services</p>
+            <p>User Agreement</p>
+            <p>Privacy</p>
+            <p>Careers</p>
+            <p>YouTube Channel</p>
+            <p>Technology@Goibibo</p>
+            <p>Customer Support</p>
+            <p>Facebook Page</p>
+            <p>Terms Of Use</p>
+            <p>Disclaimer</p>
+            <p>Privacy Policy</p>
+            <p>Twitter Handle</p>
+            <p>Gift Card</p>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            // justifyContent="center"
+            // height={100}
+            // bgcolor="white"
+            // borderRadius={1}
+            // p={2}
+          >
+            <h1 className="font-bold py-4">TRAVEL ESSENTIALS</h1>
+            <p>PNR Status</p>
+            <p>Offers</p>
+            <p>Airline Routes</p>
+            <p>Train Running Status</p>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            // justifyContent="center"
+            // height={100}
+            // bgcolor="white"
+            // borderRadius={1}
+            // p={2}
+          >
+            <h1 className="font-bold py-4">MORE LINKS</h1>
+            <p>Cheap Flights</p>
+            <p>Hotels Near Me</p>
+            <p>My Bookings</p>
+            <p>Cancellation</p>
+            <p>My Account</p>
+            <p>Wallet</p>
+            <p>Advertise with Us</p>
+          </Box>
+        </Grid>
+      </Grid>
+    </footer>
+  );
 }
 export default Footer;

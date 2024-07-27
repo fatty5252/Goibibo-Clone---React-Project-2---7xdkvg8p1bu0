@@ -52,7 +52,7 @@ export default function Bus() {
 
   return (
     <>
-      <div className="bg-[#EFF3F8] max-h-[100vh">
+      <div className="bg-[#EFF3F8] h-[150vh]">
         <div className="w-[70%] bg-[#2276E3] rounded-full h-[45rem] border-[20px] border-blue-300 ml-[-7rem]  mt-[-18rem]">
           <h1 className="text-white font-bold text-[quicksand] text-center text-[2.2rem] mt-72 z-20 ml-[5rem] ">
             BUS TICKET BOOKING

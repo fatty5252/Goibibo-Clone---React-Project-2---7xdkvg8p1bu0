@@ -117,12 +117,43 @@ export const TrainUser = ({children})=>{
         setTrainOpenDest(!trainOpenDest);
         setTrainOpenSrc(false);
       }
+
+      const differentCoachPrice=(item,price)=>{
+        if (item === "2S"){
+          return price-200
+            
+        } else if (item === "EA") {
+          return  price-100
+        }
+        else if (item === "EC") {
+          return price
+        }
+        else if (item === "CC") {
+          return price+100
+        }
+        else if (item === "SL") {
+          return  price+200
+        }
+        else if (item === "3A") {
+          return  price+400
+        }
+        else if (item === "2A") {
+          return price+600
+        }
+        else if (item === "1A") {
+          return price+800
+        }
+        else if (item === "3E") {
+          return  price+200
+        }
+      }
+      
     
 
     const object = {
         trainOpenSrc, setTrainOpenSrc,trainOpenDest, setTrainOpenDest,trainOpenDestData, setTrainOpenDestData,
         trainOpenSrcData, setTrainOpenSrcData,trainSrc, setTrainSrc,trainDest, setTrainDest,
-         trainOpenSource, trainOpenDestination,trainCityObjects,
+         trainOpenSource, trainOpenDestination,trainCityObjects, differentCoachPrice
     }
 
 return (

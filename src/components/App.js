@@ -18,12 +18,14 @@ import SuccessPayment from "../pages/SuccessPayment.js";
 import TrainReview from "../pages/TrainReview.js";
 import TrainPayment from "../pages/TrainPayment.js";
 import HotelRooms from "../pages/HotelRooms.js";
+import FlightPayment from "../pages/FlightPayment.js";
 
 // import Layout from "./Layout"; // Import the Layout component
 
 
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Navbar />
       {/* <CompOne/> */}
@@ -43,11 +45,13 @@ function App() {
         <Route path="/BusResults/:data" element={<BusResults/>}/>
         <Route path="/BusReview" element={<BusReview/>}/>
         <Route path='/SuccessPayment' element={<SuccessPayment/>}/>
-        <Route path='/TrainPayment' element={<TrainPayment/>}/>
+        <Route path='/TrainPayment/:payment' element={<TrainPayment/>}/>
         <Route path='/HotelRooms/:data' element={<HotelRooms/>}/>
+        <Route path="/FlightPayment/:payment" element={<FlightPayment/>}/>
       </Routes>
-    
     </BrowserRouter>
+      {/* <Footer/> */}
+    </>
   );
 }
 export default App;

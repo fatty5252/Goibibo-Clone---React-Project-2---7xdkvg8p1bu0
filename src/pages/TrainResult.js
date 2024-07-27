@@ -43,6 +43,7 @@ export default function TrainResult() {
     trainOpenSource,
     trainOpenDestination,
     trainCityObjects,
+    differentCoachPrice
   } = useTrainUser();
 
   const [value, setValue] = React.useState(dayjs(new Date()));
@@ -105,45 +106,16 @@ export default function TrainResult() {
         `/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`
       );
   };
-  const navigateToTrainReview = (id) => {
+  const navigateToTrainReview = (id, coachType) => {
     localStorage.getItem("token") ? 
     navigate(
-      `/TrainReview/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}&id=${id}`
+      `/TrainReview/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}&id=${id}&coachType=${coachType}`
     ) :
     alert("Please Login to Continue");
 
   }
 
-  const differentCoachPrice=(item,price)=>{
-    if (item === "2S"){
-      return price-200
-        
-    } else if (item === "EA") {
-      return  price-100
-    }
-    else if (item === "EC") {
-      return price
-    }
-    else if (item === "CC") {
-      return price+100
-    }
-    else if (item === "SL") {
-      return  price+200
-    }
-    else if (item === "3A") {
-      return  price+400
-    }
-    else if (item === "2A") {
-      return price+600
-    }
-    else if (item === "1A") {
-      return price+800
-    }
-    else if (item === "3E") {
-      return  price+200
-    }
-  }
-  
+ 
   return (
     <>
       <Box bgcolor="#EFF3F8" >
@@ -408,7 +380,7 @@ export default function TrainResult() {
                     {item?.coaches?.map((items, index) => (
                       <Box
                         key={index}
-                        onClick={() => navigateToTrainReview(item._id)}
+                        onClick={() => navigateToTrainReview(item._id,items.coachType)}
                         className="flex gap-5 cursor-pointer "
                       >
                         <Box className="flex flex-col justify-between items-start">

@@ -30,7 +30,7 @@ export default function Hotels() {
 
     return (
 
-        <div className='pt-16'>
+        <div className='pt-16 h-screen'>
             <div className="bg-orange-400 rounded-full h-3/5 absolute w-3/5 -ml-5 rounded-tl-lg rounded-tr-lg border-[10px] border-solid border-[#FFE4DC]">
                 <div className=" w-2/4">
 
