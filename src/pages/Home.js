@@ -11,10 +11,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+
+
 export default function Home() {
   const navigate = useNavigate();
   const { source, setSource, destination, setdestination, sourcedata, setsourceData,
-    destdata, setdestData, opensource, setopensource, opendest, setopendest, openSrc, opendesn, FlightSearch } = useUser();
+    destdata, setdestData, opensource, setopensource, opendest, setopendest, openSrc, opendesn, FlightSearch, getToken } = useUser();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const [value, setValue] = useState(dayjs(new Date()));
@@ -23,9 +25,20 @@ export default function Home() {
   const options = { weekday: 'short' };
   const dayOfWeek = dateObj.toLocaleDateString('en-GB', options);
   console.log(dayOfWeek);
+
+
   const navigatetoflightresults = () => {
-    source && destination ? navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
-      : toast.error('Please select source and destination');
+
+    if (!getToken){
+      toast.error('Please Login to Continue'); 
+    }
+    else if (!source && !destination){
+      toast.error('Please select source and destination')
+    }
+    else if (getToken && source && destination && dayOfWeek){
+      navigate(`/FlightResult/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)
+    }
+    
   }
   return (
     <div className='home-main pt-20 h-screen'>

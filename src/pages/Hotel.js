@@ -9,12 +9,14 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useUser } from '../providers/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { AddBoxOutlined } from '@mui/icons-material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Hotels() {
 
     const navigate = useNavigate();
-    const { hotelserach, sethotelsearch, hotelData, hotelLocationResults } = useUser();
+    const { hotelserach, sethotelsearch, hotelData, hotelLocationResults, getToken } = useUser();
     const [openLocation, setOpenLocation] = useState(false);
 
     // console.log("hotelData--->", hotelData);
@@ -23,14 +25,24 @@ export default function Hotels() {
     const [value, setValue] = React.useState(dayjs(new Date()));
 
     const handleSearchHotel = () => {
-        // setall(prev => ({ ...prev, inputValue: inputValue }));
-        hotelserach && value && navigate(`/HotelResults/data?city=${hotelserach}&from=${value}&to=${value}`)
-        // console.log("search clicked");
+        if (getToken && hotelserach && value){
+        hotelserach && value && navigate(`/HotelResults/data?city=${hotelserach}&from=${value}&to=${value}`)     
+    }
+    else if (!hotelserach){
+        toast.error("Please Enter City Name")
+    }
+    else if (!value){
+        toast.error("Please Select Date")
+    }
+    else if (!getToken){
+        toast.error("Please Login First")
+    }
     }
 
     return (
 
         <div className='pt-16 h-screen'>
+            <ToastContainer position='top-right'/>
             <div className="bg-orange-400 rounded-full h-3/5 absolute w-3/5 -ml-5 rounded-tl-lg rounded-tr-lg border-[10px] border-solid border-[#FFE4DC]">
                 <div className=" w-2/4">
 

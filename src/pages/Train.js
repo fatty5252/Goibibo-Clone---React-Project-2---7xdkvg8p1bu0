@@ -46,12 +46,28 @@ export default function Train() {
   } = useTrainUser();
 
   const navigatetoTrainresults = () => {
-    trainSrc && trainDest ?
-    trainSrc &&
-      trainDest &&
-      navigate(
-        `/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`
-      ) : toast.error('Please select source and destination');
+
+    if (getToken && trainSrc && trainDest && dayOfWeek){
+      trainSrc && trainDest && dayOfWeek && navigate(`/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`)     
+  }
+  else if (!trainSrc){
+      toast.error("Please Enter City Name")
+  }
+  else if (!trainDest){
+      toast.error("Please Select Date")
+  }
+  else if (!dayOfWeek){
+      toast.error("Please Select Date")
+  }
+  else if (!getToken){
+      toast.error("Please Login First")
+  }
+    // trainSrc && trainDest ?
+    // trainSrc &&
+    //   trainDest &&
+    //   navigate(
+    //     `/TrainResult/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}`
+    //   ) : toast.error('Please select source and destination');
   };
 
   const [value, setValue] = React.useState(dayjs(new Date()));

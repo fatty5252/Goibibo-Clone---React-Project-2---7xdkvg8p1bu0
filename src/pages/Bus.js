@@ -9,9 +9,14 @@ import dayjs from "dayjs";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useBususer } from "../providers/BusUser";
+import { useUser } from "../providers/UserProvider";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Bus() {
   const navigate = useNavigate();
+
+  const {getToken} = useUser()
 
   const {
     source,
@@ -35,11 +40,27 @@ export default function Bus() {
   // console.log(sourcedata);
 
   const navigateToBusResuts = () => {
-    source &&
-      destination &&
-      navigate(
-        `/BusResults/data?source=${source}&destination=${destination}&day=${dayOfWeek}`
-      );
+
+    if (getToken && source && destination && dayOfWeek){
+      source && destination && dayOfWeek && navigate(`/BusResults/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)     
+  }
+  else if (!source){
+      toast.error("Please Enter City Name")
+  }
+  else if (!destination){
+      toast.error("Please Select Date")
+  }
+  else if (!dayOfWeek){
+      toast.error("Please Select Date")
+  }
+  else if (!getToken){
+      toast.error("Please Login First")
+  }
+    // source &&
+    //   destination &&
+    //   navigate(
+    //     `/BusResults/data?source=${source}&destination=${destination}&day=${dayOfWeek}`
+    //   );
   };
 
   const [value, setValue] = React.useState(dayjs(new Date()));
@@ -53,6 +74,7 @@ export default function Bus() {
   return (
     <>
       <div className="bg-[#EFF3F8] h-[150vh]">
+        <ToastContainer position="top-right"/>
         <div className="w-[70%] bg-[#2276E3] rounded-full h-[45rem] border-[20px] border-blue-300 ml-[-7rem]  mt-[-18rem]">
           <h1 className="text-white font-bold text-[quicksand] text-center text-[2.2rem] mt-72 z-20 ml-[5rem] ">
             BUS TICKET BOOKING
