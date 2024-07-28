@@ -62,7 +62,7 @@ export default function HotelRooms() {
   };
 
 const navigateToPayment = ()=>{
-  navigate(`/FlightPayment/data?payment=${singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].price}`)
+  navigate(`/FlightPayment/data?payment=${singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].price +  Math.round(singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].price/ 18)}`)
 }
 
 console.log("data", singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].price)
@@ -245,8 +245,8 @@ console.log("data", singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].
                 <Box>Free Breakfast Included</Box>
               </Box>
               <Box>
-                <Box className="text-2xl font-extrabold p-2">Price</Box>
-                <Box className=" text-[#73757C]">+ ₹ 2443 taxes & fees </Box>
+                <Box className="text-2xl font-extrabold p-2">₹ {Math.round(singleHotelId.avgCostPerNight)}</Box>
+                <Box className=" text-[#73757C]">+ ₹ {Math.round(singleHotelId.avgCostPerNight/18)} taxes & fees </Box>
                 <Box className=" text-[#73757C]">1 Room per night</Box>
               </Box>
             </Box>
@@ -273,9 +273,9 @@ console.log("data", singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].
       <img style={{height:"400px", width:"100%"}} src={singleHotelId.images?.length >= 1 && singleHotelId.images[1]}/>
       </Box>
     <Box className="w-[30%] border">
-       <Box className="bg-[#D1E5FF] p-3">Room Options</Box>    
+       <Box className="bg-[#D1E5FF] p-3">Room Options</Box> 
        <Box p={5}>
-        <label>1. Free Breakfast | Free Cancellation</label>
+        <label className="font-bold text-xl">1. Free Breakfast | Free Cancellation</label>
         <ul style={{listStyle:"initial"}}>
           <li style={{padding:"20px"}}>Breakfast</li>
           <Box>{singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].cancellationPolicy}</Box>
@@ -286,7 +286,7 @@ console.log("data", singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].
        <Box className="bg-[#D1E5FF] p-3">Price</Box>
        <Box className="p-20">
                 <Box className="text-2xl font-extrabold p-2">{ singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].price}</Box>
-                <Box className=" text-[#73757C]">+ ₹ 2443 taxes & fees </Box>
+                <Box className=" text-[#73757C]">+ ₹ { Math.round(singleHotelId.rooms?.length >= 0 && singleHotelId?.rooms[0].price/ 18)} taxes & fees </Box>
                 <Box className=" text-[#73757C]">1 Room per night</Box>
                 <Box className="p-4 ">
               <Button onClick={()=>navigateToPayment()} className="hover-bg-[#FF6D38]" sx={{background:"#FF6D38", color:"white", fontSize:"15px", fontWeight:"800", padding:"10"}}>Select Room</Button>

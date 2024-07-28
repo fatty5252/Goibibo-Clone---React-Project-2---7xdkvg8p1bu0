@@ -24,6 +24,8 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import Travellers from "../components/Travellers";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function HotelResults() {
   const searchParams = new URLSearchParams(window.location.search);
@@ -49,7 +51,7 @@ export default function HotelResults() {
     navigate(
       `/HotelRooms/data?search=${hotelserach}&id=${id}`
     ) :
-    alert("Please Login to Continue");
+    toast("Please Login First");
 
   }
 
@@ -70,6 +72,7 @@ export default function HotelResults() {
   useEffect(() => {
     sethotelsearch(city);
     HotelSearch; 
+    HotelFilter("+1");
   }, [city]);
 
   
@@ -84,28 +87,22 @@ export default function HotelResults() {
     setChecked(event.target.checked);
   };
 
-  //Hotel Results
+  const HotelFilter=async(value)=>{
+    try{
+        let url;
+        url = `${serachHOtelURL}?search={"location":"${hotelserach}"}&sort={"ticketPrice":${Number(value)}}`;
+        const responce = await axios.get(url, {
+          headers: {
+            projectId: projectID,
+          },
+        });  
+        sethotelLocationResults(responce.data.data.hotels);           
+    }
+    catch(err) {
+       console.log(err);
+    }
+  }
 
-  // const HotelResults = useMemo(async () => {
-  //     try {
-  //         let url;
-  //         url = `${serachHOtelURL}?search={"location":"${city}"}`;
-  //         const response = await axios.get(url, {
-  //             headers: {
-  //                 projectId: projectID,
-  //             },
-  //         });
-  //         console.log("response---->", response.data.data.hotels);
-  //         setHotelSearchResults(response.data.data.hotels)
-  //     } catch (err) {
-  //         console.log(err);
-  //     }
-  // }, [city])
-  // console.log(hotelserach);
-
-  // useEffect(() => {
-  //     HotelResults
-  // }, [])
 
   const handleSearchHotel = () => {
     // setall(prev => ({ ...prev, inputValue: inputValue }));
@@ -118,6 +115,7 @@ export default function HotelResults() {
 
   return (
     <div>
+      <ToastContainer position="top-right"/>
       <div className="pt-20">
       <div
         style={{
@@ -213,15 +211,15 @@ export default function HotelResults() {
                 </Typography>
                 <p>showing 70 flights</p>
                 {/* Add your content here */}
-                <Typography variant="body1">
+                {/* <Typography variant="body1">
                   <Checkbox
                     checked={checked}
                     onChange={handleChange}
                     inputProps={{ "aria-label": "controlled" }}
                   />
                   Hide multi check-in flights
-                </Typography>
-                <Box>
+                </Typography> */}
+                {/* <Box>
                   <Typography variant="body1" padding="20px" fontWeight={700}>
                     Departure
                   </Typography>
@@ -267,8 +265,8 @@ export default function HotelResults() {
                       After 6PM
                     </span>
                   </Typography>
-                </Box>
-                <Box>
+                </Box> */}
+                {/* <Box>
                   <Typography variant="body1" padding="20px" fontWeight={700}>
                     Stops
                   </Typography>
@@ -304,14 +302,42 @@ export default function HotelResults() {
                       2+ Stop
                     </span>
                   </Typography>
-                </Box>
-                <Box>
+                </Box> */}
+                      <Box>
+                <Typography variant="body1" padding="20px" fontWeight={700}>
+                  Price
+                </Typography>
+                <Typography display="flex" gap="20px" flexWrap="wrap">
+                  <Button onClick={()=>{HotelFilter("-1")}}
+                    style={{
+                      color: "white",
+                      background: "blue",
+                      padding: "0.5rem",
+                      width: "8rem",
+                    }}
+                  >
+                    High To Low
+                  </Button>
+                  <Button onClick={()=>{HotelFilter("1")}}
+                    style={{
+                      color: "white",
+                      background: "blue",
+                      padding: "0.5rem",
+                      width: "8rem",
+                    }}
+                  >
+                    Low To High
+                  </Button>
+                  
+                </Typography>
+              </Box>
+                {/* <Box>
                   <Typography variant="body1" padding="20px" fontWeight={700}>
                     Price
                   </Typography>
                   <Slider />
-                </Box>
-                <Box>
+                </Box> */}
+                {/* <Box>
                   <Typography variant="body1" padding="20px" fontWeight={700}>
                     Preferred Airlines
                   </Typography>
@@ -336,7 +362,7 @@ export default function HotelResults() {
                       inputProps={{ "aria-label": "controlled" }}
                     />
                   </Typography>
-                </Box>
+                </Box> */}
               </Box>
             </Paper>
           </Grid>
@@ -344,7 +370,7 @@ export default function HotelResults() {
           {/* ====================================Main Content============================== */}
 
           <Grid item xs={9}>
-            <Box  sx={{ border: "2px solid pink" }}>
+            <Box>
               {hotelLocationResults?.length > 0 &&
                 hotelLocationResults?.map((item, index) => (
                   <Paper onClick={()=>navigateToHotelRooms(item._id)}
@@ -407,7 +433,7 @@ export default function HotelResults() {
                           {item.name}
                         </Box>
                         <Box className="text-xl text-blue-600">
-                          <img src="https://gos3.ibcdn.com/map-1626422501.png" />
+                          <img src="https://gos3.ibcdn.com/map-1626422501.png"/>
                           {item.location}
                         </Box>
                       </Box>
@@ -421,7 +447,7 @@ export default function HotelResults() {
                             ₹{Math.round(item.avgCostPerNight)}
                           </b>
                         </Box>
-                        <p>+ ₹3083 TAXES & FEES</p>
+                        <p>+ ₹{Math.round(item.avgCostPerNight/18)} TAXES & FEES</p>
                         <p className="text-gray-950 opacity-55 text-xl">
                           <b>1 room</b> per night
                         </p>

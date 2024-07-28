@@ -19,8 +19,8 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import Travellers from "../components/Travellers";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function FlightResults() {
   const {
@@ -39,7 +39,7 @@ export default function FlightResults() {
     openSrc,
     opendesn,
     getAirlineInfo,
-    getToken
+    getToken,
   } = useUser();
 
   const searchparams = new URLSearchParams(window.location.search);
@@ -106,45 +106,54 @@ export default function FlightResults() {
       console.log(err);
     }
   };
-  
-  useEffect(()=>{
-    FlightFilter("+1")
-    setSource(flightsource)
-    setdestination(flightdestination)
-  },[flightsource, flightdestination])
 
-  const FlightFilter=async(value)=>{
-    try{
-        let url;
-        url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${flightsource}","destination":"${  flightdestination 
-        }"}&day=${day}&sort={"ticketPrice":${Number(value)}}`;
-        const responce = await axios.get(url, {
-          headers: {
-            projectId: projectID,
-          },
-        });  
-        setFlightsearch(responce.data.data.flights);           
+  useEffect(() => {
+    FlightFilter("+1");
+    setSource(flightsource);
+    setdestination(flightdestination);
+  }, [flightsource, flightdestination]);
+
+  const FlightFilter = async (value) => {
+    try {
+      let url;
+      url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${flightsource}","destination":"${flightdestination}"}&day=${day}&sort={"ticketPrice":${Number(
+        value
+      )}}`;
+      const responce = await axios.get(url, {
+        headers: {
+          projectId: projectID,
+        },
+      });
+      setFlightsearch(responce.data.data.flights);
+    } catch (err) {
+      console.log(err);
     }
-    catch(err) {
-       console.log(err);
-    }
-  }
+  };
 
   const navigatetoflightresults = () => {
-    source && destination &&
-    navigate(
-      `/FlightResult/data?source=${source}&destination=${destination}&day=${day}`
-    );
+    source &&
+      destination &&
+      navigate(
+        `/FlightResult/data?source=${source}&destination=${destination}&day=${day}`
+      );
   };
   const navigatetoflightReview = (id) => {
-   getToken ? navigate(
-      `/FlightReview/data?source=${source}&destination=${destination}&day=${day}&id=${id}`
-    ) : toast("Please Login to continue");
+    if (getToken && source && destination && day) {
+      navigate(
+        `/FlightReview/data?source=${source}&destination=${destination}&day=${day}&id=${id}`
+      );
+    } else if (!getToken) {
+      toast.error("Please Login to continue");
+    }
+
+    //  getToken ? navigate(
+    //     `/FlightReview/data?source=${source}&destination=${destination}&day=${day}&id=${id}`
+    //   ) : toast("Please Login to continue");
   };
 
   return (
     <div className="h-[200vh]">
-            <ToastContainer position="top-right" />
+      <ToastContainer position="top-right" />
       <Box
         sx={{
           display: "flex",
@@ -154,7 +163,7 @@ export default function FlightResults() {
           gap: "10px",
           justifyContent: "center",
           backgroundColor: "#2274E0",
-          paddingTop:"120px"
+          paddingTop: "120px",
         }}
       >
         <Box sx={{ position: "relative" }}>
@@ -280,7 +289,6 @@ export default function FlightResults() {
               value={value}
               onChange={(newValue) => setValue(newValue)}
               minDate={dayjs()} // Disable previous dates
-              
             />
             <DatePicker
               label="Return"
@@ -295,12 +303,12 @@ export default function FlightResults() {
           id="outlined-required"
           label="Travellers and class"
           // placeholder='Enter city airport'
-          defaultValue="1 Adult"
+          value="1 Adult"
           onClick={handleOpen}
         />
         {/* Travellers component call */}
 
-        <Travellers open={open} setOpen={setOpen} />
+        {/* <Travellers open={open} setOpen={setOpen} /> */}
 
         {/* Travellers component call */}
 
@@ -313,7 +321,7 @@ export default function FlightResults() {
         </Button>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid p={2} container spacing={2}>
         {/* =======================================Left Sidebar=============================== */}
         <Grid item xs={3}>
           <Paper elevation={3}>
@@ -321,7 +329,9 @@ export default function FlightResults() {
               <Typography variant="h6" fontWeight={700}>
                 Filters
               </Typography>
-              <p className="p-2 font-semibold text-xl">Showing {flightSerchData.length} Flights</p>
+              <p className="p-2 font-semibold text-xl">
+                Showing {flightSerchData.length} Flights
+              </p>
               {/* Add your content here */}
               <Typography variant="body1">
                 <Checkbox
@@ -331,7 +341,7 @@ export default function FlightResults() {
                 />
                 Hide multi check-in flights
               </Typography>
-              <Box>
+              {/* <Box>
                 <Typography variant="body1" padding="20px" fontWeight={700}>
                   Departure
                 </Typography>
@@ -377,8 +387,8 @@ export default function FlightResults() {
                     After 6PM
                   </span>
                 </Typography>
-              </Box>
-              <Box>
+              </Box> */}
+              {/* <Box>
                 <Typography variant="body1" padding="20px" fontWeight={700}>
                   Stops
                 </Typography>
@@ -414,13 +424,16 @@ export default function FlightResults() {
                     2+ Stop
                   </span>
                 </Typography>
-              </Box>
+              </Box> */}
               <Box>
                 <Typography variant="body1" padding="20px" fontWeight={700}>
                   Price
                 </Typography>
                 <Typography display="flex" gap="20px" flexWrap="wrap">
-                  <Button onClick={()=>{FlightFilter("-1")}}
+                  <Button
+                    onClick={() => {
+                      FlightFilter("-1");
+                    }}
                     style={{
                       color: "white",
                       background: "blue",
@@ -430,7 +443,10 @@ export default function FlightResults() {
                   >
                     High To Low
                   </Button>
-                  <Button onClick={()=>{FlightFilter("1")}}
+                  <Button
+                    onClick={() => {
+                      FlightFilter("1");
+                    }}
                     style={{
                       color: "white",
                       background: "blue",
@@ -440,10 +456,9 @@ export default function FlightResults() {
                   >
                     Low To High
                   </Button>
-                  
                 </Typography>
               </Box>
-              <Box>
+              {/* <Box>
                 <Typography variant="body1" padding="20px" fontWeight={700}>
                   Preferred Airlines
                 </Typography>
@@ -468,7 +483,7 @@ export default function FlightResults() {
                     inputProps={{ "aria-label": "controlled" }}
                   />
                 </Typography>
-              </Box>
+              </Box> */}
             </Box>
           </Paper>
         </Grid>
@@ -547,7 +562,7 @@ export default function FlightResults() {
                       {item.departureTime}
                     </Typography>
                   </Box>
-               
+
                   <Typography variant="p" className="p-4 pl-16 text-xl">
                     {item.duration}
                   </Typography>
@@ -592,7 +607,7 @@ export default function FlightResults() {
                       }}
                     >
                       BOOK
-                    </Button> 
+                    </Button>
                     {/* <Button variant="contained" className="bg-orange-500 text-white px-30 py-1">BOOK</Button> */}
 
                     <Typography
@@ -675,7 +690,7 @@ export default function FlightResults() {
                         >
                           `&#8377;{singleFlightData.ticketPrice}`
                         </Typography>
-                       <Button
+                        <Button
                           onClick={() => navigatetoflightReview(item._id)}
                           variant="contained"
                           style={{
@@ -685,7 +700,7 @@ export default function FlightResults() {
                           }}
                         >
                           BOOK
-                        </Button>                        
+                        </Button>
                       </Box>
                     </Paper>
                   )}

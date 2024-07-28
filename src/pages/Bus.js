@@ -41,7 +41,7 @@ export default function Bus() {
 
   const navigateToBusResuts = () => {
 
-    if (getToken && source && destination && dayOfWeek){
+    if (source && destination && dayOfWeek){
       source && destination && dayOfWeek && navigate(`/BusResults/data?source=${source}&destination=${destination}&day=${dayOfWeek}`)     
   }
   else if (!source){
@@ -53,14 +53,6 @@ export default function Bus() {
   else if (!dayOfWeek){
       toast.error("Please Select Date")
   }
-  else if (!getToken){
-      toast.error("Please Login First")
-  }
-    // source &&
-    //   destination &&
-    //   navigate(
-    //     `/BusResults/data?source=${source}&destination=${destination}&day=${dayOfWeek}`
-    //   );
   };
 
   const [value, setValue] = React.useState(dayjs(new Date()));

@@ -23,6 +23,8 @@ import { useTrainUser } from "../providers/TrainUser";
 import { grey, orange } from "@mui/material/colors";
 import DropDown from "../components/DropDown";
 import { faWeight } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function TrainResult() {
   const navigate = useNavigate();
@@ -111,7 +113,7 @@ export default function TrainResult() {
     navigate(
       `/TrainReview/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}&id=${id}&coachType=${coachType}`
     ) :
-    alert("Please Login to Continue");
+    toast.error("Please Login First");
 
   }
 
@@ -119,6 +121,7 @@ export default function TrainResult() {
   return (
     <>
       <Box bgcolor="#EFF3F8" >
+        <ToastContainer position="top-right"/>
         <Box className="flex items-center flex-nowrap gap-5 p-4 pt-24 bg-orange-400 justify-center  ">
           <Box sx={{ position: "relative" }}>
             <TextField
@@ -318,7 +321,7 @@ export default function TrainResult() {
                 <Typography variant="h6" color="#647A97">
                   We have found {trainSearch.length} trains on or near this route
                 </Typography>
-                <Typography
+                {/* <Typography
                   display="flex"
                   alignItems="center"
                   flexDirection="row"
@@ -327,7 +330,7 @@ export default function TrainResult() {
                 >
                   Sorted by
                   <DropDown />
-                </Typography>
+                </Typography> */}
               </Box>
             </Grid>
             <Grid item xs={9} md={11}>

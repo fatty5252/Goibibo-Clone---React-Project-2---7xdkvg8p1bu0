@@ -25,7 +25,7 @@ export default function Hotels() {
     const [value, setValue] = React.useState(dayjs(new Date()));
 
     const handleSearchHotel = () => {
-        if (getToken && hotelserach && value){
+        if (hotelserach && value){
         hotelserach && value && navigate(`/HotelResults/data?city=${hotelserach}&from=${value}&to=${value}`)     
     }
     else if (!hotelserach){
@@ -33,9 +33,6 @@ export default function Hotels() {
     }
     else if (!value){
         toast.error("Please Select Date")
-    }
-    else if (!getToken){
-        toast.error("Please Login First")
     }
     }
 

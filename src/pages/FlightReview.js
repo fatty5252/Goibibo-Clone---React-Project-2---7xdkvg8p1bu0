@@ -7,7 +7,8 @@ import dayjs from "dayjs";
 import { useUser } from "../providers/UserProvider";
 import { Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-// import { set } from "react-datepicker/dist/date_utils";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function FlightReview() {
 
@@ -46,7 +47,7 @@ export default function FlightReview() {
 
   const ValidateData=()=>{
     if (address === "" || pincode === "" || state === "") {
-      alert("Please fill in all required fields");
+      toast.error("Please fill all the fields")
       return false;
     }
     else {
@@ -56,14 +57,13 @@ export default function FlightReview() {
 
   return (
     <div className="bg-[#E9EEF7] h-[100vh] ">
+      <ToastContainer position="top-right"/>
       <div className="flex justify-center ">
         <div className="bg-blue-500 w-full h-72 ">
           <h1 className="text-2xl text-white md:text-3xl font-bold mb-4 pt-24 text-center">
             Review your booking
           </h1>
-
-          
-          <Grid
+        <Grid
             container
             gap={10}
             spacing={2}

@@ -294,14 +294,26 @@ export default function BusResults() {
             </Typography>
             
             <Box>
-              <Typography  variant="body1" fontWeight={700}>
+              <Typography p={2}  variant="body1" fontWeight={700}>
                 Sprt By Price
               </Typography>
-              <Button onClick={()=>BusSearchFilter(-1)}>High to low</Button>
-              <Button onClick={()=>BusSearchFilter(1)}>low to high</Button>
+              <Typography display="flex" gap="20px" flexWrap="wrap">
+              <Button  style={{
+                      color: "white",
+                      background: "blue",
+                      padding: "0.5rem",
+                      width: "8rem",
+                    }} onClick={()=>BusSearchFilter(-1)}>High to low</Button>
+              <Button  style={{
+                      color: "white",
+                      background: "blue",
+                      padding: "0.5rem",
+                      width: "8rem",
+                    }} onClick={()=>BusSearchFilter(1)}>low to high</Button>
+                    </Typography>
               {/* <Slider onClick={()=>BusSearch(e.target.value)} defaultValue={30} /> */}
             </Box>
-            <Box className="border-b-slate-900 border-[2px] border-solid border-red-700 p-3">
+            {/* <Box className="border-b-slate-900 border-[2px] border-solid border-red-700 p-3">
               <Typography>
                 Departure Time
               </Typography>
@@ -309,8 +321,8 @@ export default function BusResults() {
               <Button  className="bg-gray-400">6 AM - 12 noon</Button>
               <Button  className="bg-gray-400">12 noon - 6 PM</Button>
               <Button  className="bg-gray-400">6 PM - 12 midnight</Button>
-            </Box>
-            <Box>
+            </Box> */}
+            {/* <Box>
               <Typography>
                 Arrival Time
               </Typography>
@@ -318,7 +330,7 @@ export default function BusResults() {
               <Button className="bg-gray-400">6 AM - 12 noon</Button>
               <Button className="bg-gray-400">12 noon - 6 PM</Button>
               <Button className="bg-gray-400">6 PM - 12 midnight</Button>
-            </Box>
+            </Box> */}
             {/* <Box>
               <Typography variant="body1" fontWeight={700}>
                 Stops
