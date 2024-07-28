@@ -90,13 +90,14 @@ export default function HotelResults() {
   const HotelFilter=async(value)=>{
     try{
         let url;
-        url = `${serachHOtelURL}?search={"location":"${hotelserach}"}&sort={"ticketPrice":${Number(value)}}`;
+        url = `${serachHOtelURL}?search={"location":"${hotelserach}"}&sort={"avgCostPerNight":${Number(value)}}`;
         const responce = await axios.get(url, {
           headers: {
             projectId: projectID,
           },
         });  
         sethotelLocationResults(responce.data.data.hotels);           
+        console.log(HotelFilter);
     }
     catch(err) {
        console.log(err);
