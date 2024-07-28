@@ -20,6 +20,7 @@ import Travellers from "../components/Travellers";
 import { useBususer } from "../providers/BusUser";
 import { useNavigate } from "react-router-dom";
 import SeatSelectionModal from "../components/SeatSelectionModal";
+import { useUser } from "../providers/UserProvider";
 
 export default function BusResults() {
   const searchparams = new URLSearchParams(window.location.search);
@@ -45,6 +46,8 @@ export default function BusResults() {
     opendesn,busCityObjects,
     SingleBusData, SingleBusSearch,busOpenPopup, setBusOpenPopup
   } = useBususer();
+
+  const {getToken} = useUser();
 
   const [busSearchData, setBusSearchData] = useState([]);
   const [busDetails, setBusDetails] = useState(false);
@@ -424,7 +427,7 @@ export default function BusResults() {
                     >
                       SELECT SEAT
                     </Button>
-                    {busOpenPopup && <SeatSelectionModal />}
+                    {busOpenPopup && getToken && <SeatSelectionModal />}
                   </Stack>
                 </Box>
               </Paper>

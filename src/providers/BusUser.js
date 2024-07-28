@@ -8,6 +8,9 @@ import {
 } from "react";
 import axios from "axios";
 import { projectID } from "../components/Constrains";
+import { useUser } from "./UserProvider";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserContext = createContext();
 
@@ -21,6 +24,8 @@ export const BusUser = ({ children }) => {
   const [SingleBusData, setSingleBusData] = useState([]);
   const [busOpenPopup, setBusOpenPopup] = useState(false);
   const [paymentData, setPaymentData] = useState({"fare": 0});
+
+  const {getToken} = useUser();
 
 
   const busCityObjects = [
@@ -213,7 +218,12 @@ export const BusUser = ({ children }) => {
   ];
 
   const SingleBusSearch = async (busId) => {
+    if (getToken){
     setBusOpenPopup(!busOpenPopup);
+    }
+    else {
+     toast.error("Please Login First");
+    }
     try {
       const response = await axios.get(
         `https://academics.newtonschool.co/api/v1/bookingportals/bus/${busId}`,
@@ -268,6 +278,7 @@ export const BusUser = ({ children }) => {
 
   return (
     <>
+    <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false}/>
       <UserContext.Provider value={object}>{children}</UserContext.Provider>
     </>
   );

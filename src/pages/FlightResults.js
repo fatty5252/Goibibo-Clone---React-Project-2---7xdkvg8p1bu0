@@ -187,6 +187,7 @@ export default function FlightResults() {
                 position: "absolute",
                 top: "58px",
                 left: "0px",
+                zIndex: "40",
               }}
             >
               {sourcedata &&
