@@ -30,7 +30,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function TrainResult() {
   const navigate = useNavigate();
-  const theme = useTheme();
+  // const theme = useTheme();
   // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   // const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const [rating, setRaing] = useState("");
@@ -39,7 +39,6 @@ export default function TrainResult() {
       
   }
 
- 
 
   const {
     trainOpenSrc,
@@ -461,7 +460,7 @@ export default function TrainResult() {
                   <Box sx={{ textAlign: "start" }}>
                     {item?.coaches?.length > 3 && (
                       <Button onClick={() => setTrainClass(!trainClass)}>
-                        View All
+                        {trainClass ? "View Less" : "View More"}
                       </Button>
                     )}
                   </Box>
