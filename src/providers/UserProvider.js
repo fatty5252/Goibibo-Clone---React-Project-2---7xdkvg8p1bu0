@@ -10,8 +10,8 @@ export const UserProvider = ({ children }) => {
     const [getToken, setToken] = useState(localStorage.getItem('token'));
     const [getName, setName] = useState(localStorage.getItem('name'));
     const [loginpop, setLoginpop] = useState(false);
-    const [source, setSource] = useState([])
-    const [destination, setdestination] = useState([])
+    const [source, setSource] = useState("")
+    const [destination, setdestination] = useState("")
     const [sourcedata, setsourceData] = useState([]);
     const [destdata, setdestData] = useState([]);
     const [opensource, setopensource] = useState(false);

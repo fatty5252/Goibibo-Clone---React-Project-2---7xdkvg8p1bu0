@@ -9,6 +9,8 @@ import {
   Button,
   Checkbox,
   Slider,
+  FormControlLabel,
+  FormGroup, useMediaQuery,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -23,11 +25,21 @@ import { useTrainUser } from "../providers/TrainUser";
 import { grey, orange } from "@mui/material/colors";
 import DropDown from "../components/DropDown";
 import { faWeight } from "@fortawesome/free-solid-svg-icons";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TrainResult() {
   const navigate = useNavigate();
+  const theme = useTheme();
+  // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  // const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+  const [rating, setRaing] = useState("");
+
+  const ratingFilter=()=>{
+      
+  }
+
+ 
 
   const {
     trainOpenSrc,
@@ -45,11 +57,17 @@ export default function TrainResult() {
     trainOpenSource,
     trainOpenDestination,
     trainCityObjects,
-    differentCoachPrice
+    differentCoachPrice,
   } = useTrainUser();
 
   const [value, setValue] = React.useState(dayjs(new Date()));
   const [trainClass, setTrainClass] = useState(false);
+  const [selected, setSelected] = useState("0");
+
+  const handleChangeValue = (value) => {
+    setSelected(value);
+    TrainFilter(value);
+  };
 
   // const day = value && value.$d.split(" ").slice(0,4)
   // console.log(day)
@@ -68,7 +86,7 @@ export default function TrainResult() {
   // console.log(trainSource, trainDestination, trainDay);
   // console.log(trainSrc, trainDest, trainDay);
 
- useMemo(async () => {
+  useMemo(async () => {
     try {
       let url;
       url = `https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${trainDay}&search={"source":"${trainSource}","destination":"${trainDestination}"}`;
@@ -83,24 +101,29 @@ export default function TrainResult() {
       console.log(err);
     }
   }, [trainDay, trainSource, trainDestination]);
-   
-  useEffect(()=>{
-    TrainFilter("+1");
-    setTrainSrc(trainSource)
-    setTrainDest(trainDestination)   
-  },[trainSource, trainDestination])
 
-  const TrainFilter=async(value)=>{
-    let url;
-    url = `https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${trainDay}&search={"source":"${trainSource}","destination":"${trainDestination}"}&sort={"fare":${Number(value)}}`
-    const response = await axios.get(url, {
-      headers: {
-        projectId: projectID,
-      },
-    });
-    setTrainSearch(response?.data?.data?.trains);
-  }
- 
+  useEffect(() => {
+    TrainFilter("+1");
+    setTrainSrc(trainSource);
+    setTrainDest(trainDestination);
+  }, [trainSource, trainDestination]);
+
+  const TrainFilter = async (value) => {
+    try {
+      let url;     
+        url = `https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${trainDay}&search={"source":"${trainSource}","destination":"${trainDestination}"}&sort={"fare":${Number(value)}}&filter={"trainType":${value}}&filter={"coaches.coachType"}:${value}}&filter{"departureTime":{"$gte":${value}}}&filter{"departureTime":{"$lte":${value}}}`;
+     
+      const response = await axios.get(url, {
+        headers: {
+          projectId: projectID,
+        },
+      });
+      setTrainSearch(response?.data?.data?.trains);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const navigatetoTrainresults = () => {
     trainSrc &&
       trainDest &&
@@ -109,19 +132,17 @@ export default function TrainResult() {
       );
   };
   const navigateToTrainReview = (id, coachType) => {
-    localStorage.getItem("token") ? 
-    navigate(
-      `/TrainReview/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}&id=${id}&coachType=${coachType}`
-    ) :
-    toast.error("Please Login First");
+    localStorage.getItem("token")
+      ? navigate(
+          `/TrainReview/data?source=${trainSrc}&destination=${trainDest}&day=${dayOfWeek}&id=${id}&coachType=${coachType}`
+        )
+      : toast.error("Please Login First");
+  };
 
-  }
-
- 
   return (
     <>
-      <Box bgcolor="#EFF3F8" >
-        <ToastContainer position="top-right"/>
+      <Box bgcolor="#EFF3F8">
+        <ToastContainer position="top-right" />
         <Box className="flex items-center flex-nowrap gap-5 p-4 pt-24 bg-orange-400 justify-center  ">
           <Box sx={{ position: "relative" }}>
             <TextField
@@ -271,70 +292,90 @@ export default function TrainResult() {
           </Box>
         </Box>
         {/* =======================Bottom Grid========================== */}
-        <Grid container spacing={2} component="center" mt={3}>
-          <Grid xs={12} md={3}>
-            <Paper elevation={3} sx={{ padding: "20px" }}>
-            <Box>
-                <Typography variant="body1" padding="20px" fontWeight={700}>
-                  Filter By Price
-                </Typography>
-                <Typography display="flex" gap="20px" flexWrap="wrap">
-                  <Button onClick={()=>{TrainFilter("-1")}}
-                    style={{
-                      color: "white",
-                      background: "blue",
-                      padding: "0.5rem",
-                      width: "8rem",
-                    }}
-                  >
-                    High To Low
-                  </Button>
-                  <Button onClick={()=>{TrainFilter("1")}}
-                    style={{
-                      color: "white",
-                      background: "blue",
-                      padding: "0.5rem",
-                      width: "8rem",
-                    }}
-                  >
-                    Low To High
-                  </Button>
-                  
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid xs={12} md={9}>
-            <Grid
-              item
-              xs={12}
-              md={12}
-              sx={{ display: { xs: "none", md: "block", lg: "block" } }}
-            >
-              <Box
-                p={2}
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-around"
-                alignItems="center"
+        <Grid container spacing={2} mt={3} justifyContent="center">
+      <Grid item xs={12} md={3}>
+        <Paper elevation={3} sx={{ padding: "20px" }}>
+          <Box>
+            <Typography variant="body1" padding="20px" fontWeight={700}>
+              Filter By Price
+            </Typography>
+            <Box display="flex" gap="20px" flexWrap="wrap">
+              <Button
+                onClick={() => TrainFilter("-1")}
+                style={{
+                  color: "white",
+                  background: "blue",
+                  padding: "0.5rem",
+                  width: "8rem",
+                }}
               >
-                <Typography variant="h6" color="#647A97">
-                  We have found {trainSearch.length} trains on or near this route
-                </Typography>
-                {/* <Typography
-                  display="flex"
-                  alignItems="center"
-                  flexDirection="row"
-                  variant="h6"
-                  color="#647A97"
-                >
-                  Sorted by
-                  <DropDown />
-                </Typography> */}
-              </Box>
-            </Grid>
-            <Grid item xs={9} md={11}>
-              {trainCityObjects && trainSearch.map((item, index) => (
+                High To Low
+              </Button>
+              <Button
+                onClick={() => TrainFilter("1")}
+                style={{
+                  color: "white",
+                  background: "blue",
+                  padding: "0.5rem",
+                  width: "8rem",
+                }}
+              >
+                Low To High
+              </Button>
+            </Box>
+            {/* <Box display="flex" gap="20px" flexWrap="wrap">
+              <Typography>Filters</Typography>
+              <input onChange={ratingFilter} placeholder="Enter Price" />
+              <input />
+              <input />
+              </Box> */}
+          </Box>
+          <Box>
+            <Typography variant="body1" padding="20px" fontWeight={700}>Quick Filter</Typography>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox />} label="Departure After 6 PM" />
+              <FormControlLabel control={<Checkbox />} label="Arrival Before 12 PM" />
+            </FormGroup>
+            <Typography variant="body1" padding="20px" fontWeight={700}>Journey Class Filter</Typography>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox />} label="1st Class AC - 1A" />
+              <FormControlLabel control={<Checkbox />} label="2 Tier AC - 2A" />
+              <FormControlLabel control={<Checkbox />} label="3 Tier AC - 3A" />
+              <FormControlLabel control={<Checkbox />} label="AC 3 tier (economy)-3E" />
+              <FormControlLabel control={<Checkbox />} label="Sleeper - SL" />
+              <FormControlLabel control={<Checkbox />} label="AC Chair Car - CC" />
+              <FormControlLabel control={<Checkbox />} label="Second Sitting - 2S" />
+              <FormControlLabel control={<Checkbox />} label="Executive Anubhuti - EA" />
+            </FormGroup>
+            <Typography variant="body1" padding="20px" fontWeight={700}>Train Types</Typography>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox />} label="Superfast" />
+              <FormControlLabel control={<Checkbox />} label="Rajdhani" />
+              <FormControlLabel control={<Checkbox />} label="Express" />
+              <FormControlLabel control={<Checkbox />} label="Shatabdi" />
+              <FormControlLabel control={<Checkbox />} label="Duranto" />
+            </FormGroup>
+          </Box>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} md={9}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} display={{ xs: 'none', md: 'block' }}>
+            <Box
+              p={2}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-around"
+              alignItems="center"
+            >
+              <Typography variant="h6" color="#647A97">
+                We have found {trainSearch.length} trains on or near this route
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            {trainSearch &&
+              trainSearch.map((item, index) => (
                 <Paper
                   key={index}
                   sx={{
@@ -344,17 +385,25 @@ export default function TrainResult() {
                     borderRadius: "5px",
                   }}
                 >
-
                   <Box className="flex row py-3 items-center justify-between">
                     <Box className="flex row gap-3 ">
-                      <Typography sx={{ fontWeight: "600", fontSize: "20px" }} variant="h6">{item.trainNumber}</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "20px" }} variant="h6">{item.trainName}</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "20px" }} variant="h6">
+                        {item.trainNumber}
+                      </Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "20px" }} variant="h6">
+                        {item.trainName}
+                      </Typography>
                     </Box>
                     <Box className="flex py-1 row gap-3 ">
                       <Button className="p-3">VIEW ROUTE</Button>
-                      <Box className="p-1 text-lg ">Runs in: {item.daysOfOperation.map((days, index) => (
-                        <span key={index} className="p-1 text-gray-400">{days}</span>
-                      ))} </Box>
+                      <Box className="p-1 text-lg ">
+                        Runs in:{" "}
+                        {item.daysOfOperation.map((days, index) => (
+                          <span key={index} className="p-1 text-gray-400">
+                            {days}
+                          </span>
+                        ))}{" "}
+                      </Box>
                     </Box>
                   </Box>
                   <Box className="flex justify-between pb-10 gap-8 items-center">
@@ -362,10 +411,14 @@ export default function TrainResult() {
                       <Typography sx={{ fontWeight: "400", fontSize: "18px" }} variant="body1">
                         {item.arrivalTime}
                       </Typography>
-                      <Typography sx={{ fontWeight: "400", fontSize: "18px" }} variant="body1">{item.source}</Typography>
+                      <Typography sx={{ fontWeight: "400", fontSize: "18px" }} variant="body1">
+                        {item.source}
+                      </Typography>
                     </Box>
                     <Box>
-                      <span>*----------------------{item.travelDuration}</span>
+                      <span>
+                        *----------------------{item.travelDuration}
+                      </span>
                       <span> ----------------------------*</span>
                     </Box>
                     <Box className="flex justify-between gap-8 ">
@@ -377,19 +430,25 @@ export default function TrainResult() {
                       </Typography>
                     </Box>
                   </Box>
-                  {/* <Typography variant="body1">{item.fare}</Typography> */}
-
-                  <Box sx={{height:`${!trainClass ? "75px" : "auto"}`, overflow:`${!trainClass ? "hidden" : "none"}`}} className="flex flexDirectionRow gap-5 flex-wrap">
+                  <Box
+                    sx={{
+                      height: `${!trainClass ? "75px" : "auto"}`,
+                      overflow: `${!trainClass ? "hidden" : "none"}`,
+                    }}
+                    className="flex flexDirectionRow gap-5 flex-wrap"
+                  >
                     {item?.coaches?.map((items, index) => (
                       <Box
                         key={index}
-                        onClick={() => navigateToTrainReview(item._id,items.coachType)}
+                        onClick={() => navigateToTrainReview(item._id, items.coachType)}
                         className="flex gap-5 cursor-pointer "
                       >
                         <Box className="flex flex-col justify-between items-start">
                           <Box className="flex justify-center gap-48 bg-[#F4FAF4] p-1">
                             <Typography>{items.coachType}</Typography>
-                            <Typography >{differentCoachPrice(items.coachType,item.fare)}</Typography>
+                            <Typography>
+                              {differentCoachPrice(items.coachType, item.fare)}
+                            </Typography>
                           </Box>
                           <Box className="flex justify-between gap-28 w-64 p-2 bg-[#E9F6EA]">
                             <Typography>AVL {items.numberOfSeats}</Typography>
@@ -399,14 +458,19 @@ export default function TrainResult() {
                       </Box>
                     ))}
                   </Box>
-                  <Box sx={{textAlign:"start"}}>
-                  {item?.coaches?.length > 3 &&  <Button onClick={()=>setTrainClass(!trainClass)} >View All</Button>}
+                  <Box sx={{ textAlign: "start" }}>
+                    {item?.coaches?.length > 3 && (
+                      <Button onClick={() => setTrainClass(!trainClass)}>
+                        View All
+                      </Button>
+                    )}
                   </Box>
                 </Paper>
               ))}
-            </Grid>
           </Grid>
         </Grid>
+      </Grid>
+    </Grid>
       </Box>
     </>
   );

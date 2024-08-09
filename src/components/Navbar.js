@@ -197,10 +197,10 @@ function Navbar() {
                 {getToken && <Button className='categoryParent'
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'flex', gap: '7px', alignItems: 'center', pl: '50px' }}
-                > <BusinessCenterIcon sx={{ color: 'grey' }} />
+                > <BusinessCenterIcon sx={{ color: 'grey', cursor:"not-allowed" }} />
                   <Box >
-                    <Typography sx={{ color: 'blue', fontWeight: '700', textAlign: 'start' }}>My Trips</Typography>
-                    <Typography sx={{ color: '#7E7E7E', fontWeight: '700' }}>Manage Booking</Typography>
+                    <Typography sx={{ color: 'blue', fontWeight: '700', textAlign: 'start', cursor:"not-allowed" }}>My Trips</Typography>
+                    <Typography sx={{ color: '#7E7E7E', fontWeight: '700', cursor:"not-allowed" }}>Manage Booking</Typography>
                   </Box>
                 </Button>}
 

@@ -21,6 +21,8 @@ import { useBususer } from "../providers/BusUser";
 import { useNavigate } from "react-router-dom";
 import SeatSelectionModal from "../components/SeatSelectionModal";
 import { useUser } from "../providers/UserProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function BusResults() {
   const searchparams = new URLSearchParams(window.location.search);
@@ -154,6 +156,7 @@ export default function BusResults() {
           paddingTop: "130px"
         }}
       >
+        <ToastContainer  position="top-right"/>
         <Box sx={{ position: "relative", flexGrow: 1, minWidth: "150px" }}>
           <TextField
             required

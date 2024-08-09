@@ -68,3 +68,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+https://makemytripreactappclone-cyn3ne8tn-vermanand1998.vercel.app/trains?source=Delhi+Junction&destination=Salem+Junction&day=Tue&date=8%2F4%2F2024&trainType=Rajdhani&coachType=2A&arrivalTime=12&departureTime=18

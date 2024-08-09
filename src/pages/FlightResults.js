@@ -9,6 +9,8 @@ import {
   Button,
   Checkbox,
   Slider,
+  FormGroup,
+  FormControlLabel,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -59,7 +61,13 @@ export default function FlightResults() {
 
   const [flightDetails, setFlightDetails] = useState(false);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [selected, setSelected] = useState("0");
 
+  const handleChangeValue = (value) => {
+    setSelected(value);
+    FlightFilter(value);
+  };
+  
   const handleFlightDetails = (index) => {
     if (selectedCardIndex === index) {
       setFlightDetails(false);
@@ -111,14 +119,16 @@ export default function FlightResults() {
     FlightFilter("+1");
     setSource(flightsource);
     setdestination(flightdestination);
-  }, [flightsource, flightdestination]);
+  }, []);
 
   const FlightFilter = async (value) => {
     try {
       let url;
-      url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${flightsource}","destination":"${flightdestination}"}&day=${day}&sort={"ticketPrice":${Number(
-        value
-      )}}`;
+      if(value==="-1" || value==="+1"){
+        url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${flightsource}","destination":"${flightdestination}"}&day=${day}&sort={"ticketPrice":${Number(value)}}&filter={"stops":${selected}}`; 
+      } else{
+        url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${flightsource}","destination":"${flightdestination}"}&day=${day}&filter={"stops":${value}}`;
+      }
       const responce = await axios.get(url, {
         headers: {
           projectId: projectID,
@@ -446,7 +456,7 @@ export default function FlightResults() {
                   </Button>
                   <Button
                     onClick={() => {
-                      FlightFilter("1");
+                      FlightFilter("+1");
                     }}
                     style={{
                       color: "white",
@@ -485,6 +495,44 @@ export default function FlightResults() {
                   />
                 </Typography>
               </Box> */}
+              <Box>
+                <Typography variant="body1" padding="20px" fontWeight={700}>
+                  Stop
+                </Typography>
+                <FormGroup>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={selected === "0"}
+            onChange={() => handleChangeValue("0")}
+          />
+        }
+        label="Non-stop"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={selected === "1"}
+            onChange={() => handleChangeValue("1")}
+          />
+        }
+        label="stop-1"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={selected === "2"}
+            onChange={() => handleChangeValue("2")}
+          />
+        }
+        label="stop-2"
+      />
+    </FormGroup>
+
+                {/* <Checkbox onClick={()=>FlightFilter("0")} title="Non-stop"/><Typography>Non-stop</Typography>
+                  <Checkbox onClick={()=>FlightFilter("1")} title="stop 1"/><Typography>stop 1</Typography>
+                  <Checkbox onClick={()=>FlightFilter("2")} title="stop 2"/><Typography>stop 2</Typography> */}
+              </Box>
             </Box>
           </Paper>
         </Grid>
@@ -565,7 +613,10 @@ export default function FlightResults() {
                   </Box>
 
                   <Typography variant="p" className="p-4 pl-16 text-xl">
-                    {item.duration}
+                    {item.duration} hr
+                  </Typography>
+                  <Typography variant="p" className="p-4 pl-16 text-xl">
+                    stop: {item.stops}
                   </Typography>
                   <Box>
                     <Box>
@@ -674,7 +725,10 @@ export default function FlightResults() {
                             Duration
                           </Typography>
                           <Typography variant="body1" className=" px-6">
-                            {singleFlightData.duration}
+                            {singleFlightData.duration} hr
+                          </Typography>
+                          <Typography variant="body1" className=" px-6">
+                            {singleFlightData.stops}
                           </Typography>
                         </Box>
                         <box display="flex" flexDirection="row" className="p-4">

@@ -12,11 +12,12 @@ import { useUser } from "./UserProvider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const UserContext = createContext();
 
 export const BusUser = ({ children }) => {
-  const [source, setSource] = useState([]);
-  const [destination, setdestination] = useState([]);
+  const [source, setSource] = useState("");
+  const [destination, setdestination] = useState("");
   const [sourcedata, setsourceData] = useState([]);
   const [destdata, setdestData] = useState([]);
   const [opensource, setopensource] = useState(false);
@@ -287,3 +288,8 @@ export const BusUser = ({ children }) => {
 export function useBususer() {
   return useContext(UserContext);
 }
+
+
+
+
+
